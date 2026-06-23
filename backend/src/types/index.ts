@@ -66,6 +66,14 @@ export interface ResetPasswordRequest {
   new_password: string;
 }
 
+// Data sent when updating profile
+export interface UpdateProfileRequest {
+  full_name: string;
+  email: string;
+  mobile_number?: string;
+  student_id?: string;
+}
+
 // Standard API response shape
 export interface ApiResponse<T = null> {
   success: boolean;

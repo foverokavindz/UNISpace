@@ -21,7 +21,8 @@ const Sidebar: React.FC = () => {
   // Links for admins
   const adminLinks = [
     { label: 'Dashboard',         path: '/admin/dashboard' },
-    { label: 'Upload Resource',   path: '/admin/upload' },
+    { label: 'Profile',           path: '/admin/profile' },
+    { label: 'Upload Resource',   path: '/admin/upload-resources' },
     { label: 'Manage Resources',  path: '/admin/resources' },
   ];
 

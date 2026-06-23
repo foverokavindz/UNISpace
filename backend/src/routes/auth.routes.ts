@@ -4,7 +4,7 @@
 // ============================================================
 
 import { Router } from 'express';
-import { register, login, getMe, forgotPassword, verifyOtp, resetPassword } from '../controllers/auth.controller';
+import { register, login, getMe, updateProfile, forgotPassword, verifyOtp, resetPassword } from '../controllers/auth.controller';
 import { verifyToken } from '../middleware/auth.middleware';
 
 const router = Router();
@@ -17,6 +17,9 @@ router.post('/login', login);
 
 // GET /api/auth/me — get current user (protected)
 router.get('/me', verifyToken, getMe);
+
+// PUT /api/auth/profile — update current user profile (protected)
+router.put('/profile', verifyToken, updateProfile);
 
 // POST /api/auth/forgot-password — request OTP
 router.post('/forgot-password', forgotPassword);

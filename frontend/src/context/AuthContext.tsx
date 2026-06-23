@@ -15,6 +15,7 @@ interface AuthContextType {
   isLoading: boolean;          // true while checking if user is already logged in
   login: (token: string, user: User) => void;   // called after successful login
   logout: () => void;          // clears auth state
+  setUser: (user: User) => void; // update user state (e.g. after profile edit)
 }
 
 // Create context with undefined default (checked in useAuth)
@@ -72,7 +73,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoading, login, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );

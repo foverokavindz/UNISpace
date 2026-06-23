@@ -18,6 +18,7 @@ import {
   ForgotPasswordRequest,
   VerifyOtpRequest,
   ResetPasswordRequest,
+  UpdateProfileRequest,
 } from '../types';
 import { AuthRequest } from '../middleware/auth.middleware';
 
@@ -211,7 +212,7 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
     const pool = await getPool();
     const userResult = await pool.request()
       .input('id', sql.Int, userId)
-      .query('SELECT id, full_name, email, student_id, role, created_at FROM users WHERE id = @id');
+      .query('SELECT id, full_name, email, student_id, mobile_number, role, created_at FROM users WHERE id = @id');
 
     const users = userResult.recordset as UserResponse[];
     if (users.length === 0) {
@@ -226,6 +227,88 @@ export const getMe = async (req: AuthRequest, res: Response): Promise<void> => {
     });
   } catch (error) {
     console.error('GetMe error:', error);
+    res.status(500).json(<ApiResponse>{ success: false, message: 'Internal server error.' });
+  }
+};
+
+// ----------------------------------------------------------
+// PUT /api/auth/profile
+// Update the currently logged-in user's profile
+// ----------------------------------------------------------
+export const updateProfile = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+
+    if (userId === undefined) {
+      res.status(401).json(<ApiResponse>{ success: false, message: 'Not authenticated.' });
+      return;
+    }
+
+    const { full_name, email, mobile_number, student_id }: UpdateProfileRequest = req.body;
+
+    // --- Basic validation ---
+    if (!full_name || !email) {
+      res.status(400).json(<ApiResponse>{
+        success: false,
+        message: 'Full name and email are required.',
+      });
+      return;
+    }
+
+    const pool = await getPool();
+
+    // --- Check for duplicate email, student_id, mobile_number (exclude current user) ---
+    const duplicateCheck = await pool.request()
+      .input('email', sql.NVarChar(150), email)
+      .input('student_id', sql.NVarChar(50), student_id || '')
+      .input('mobile_number', sql.NVarChar(20), mobile_number || '')
+      .input('id', sql.Int, userId)
+      .query(`
+        SELECT id FROM users
+        WHERE id != @id
+          AND (email = @email
+               OR (student_id = @student_id AND @student_id != '')
+               OR (mobile_number = @mobile_number AND @mobile_number != ''))
+      `);
+
+    if (duplicateCheck.recordset.length > 0) {
+      res.status(409).json(<ApiResponse>{
+        success: false,
+        message: 'Another account with this email, student ID, or mobile number already exists.',
+      });
+      return;
+    }
+
+    // --- Update the user ---
+    await pool.request()
+      .input('full_name', sql.NVarChar(100), full_name)
+      .input('email', sql.NVarChar(150), email)
+      .input('mobile_number', sql.NVarChar(20), mobile_number || '')
+      .input('student_id', sql.NVarChar(50), student_id || '')
+      .input('id', sql.Int, userId)
+      .query(`
+        UPDATE users
+        SET full_name = @full_name,
+            email = @email,
+            mobile_number = @mobile_number,
+            student_id = @student_id
+        WHERE id = @id
+      `);
+
+    // --- Fetch updated user to return ---
+    const updatedResult = await pool.request()
+      .input('uid', sql.Int, userId)
+      .query('SELECT id, full_name, email, student_id, mobile_number, role, created_at FROM users WHERE id = @uid');
+
+    const updatedUser = updatedResult.recordset[0] as UserResponse;
+
+    res.status(200).json(<ApiResponse<UserResponse>>{
+      success: true,
+      message: 'Profile updated successfully.',
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.error('UpdateProfile error:', error);
     res.status(500).json(<ApiResponse>{ success: false, message: 'Internal server error.' });
   }
 };

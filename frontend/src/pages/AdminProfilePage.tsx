@@ -1,6 +1,6 @@
 // ============================================================
-// src/pages/StudentProfilePage.tsx
-// Student Profile page
+// src/pages/AdminProfilePage.tsx
+// Admin Profile page — view and edit profile information
 // ============================================================
 
 import React, { useState } from 'react';
@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { updateProfile } from '../services/auth.service';
 
-const StudentProfilePage: React.FC = () => {
+const AdminProfilePage: React.FC = () => {
   const { user, setUser } = useAuth();
 
   // Edit mode toggle
@@ -83,8 +83,8 @@ const StudentProfilePage: React.FC = () => {
           <div className="max-w-4xl mx-auto">
 
             <div className="mb-8">
-              <h1 className="text-2xl font-bold text-gray-800">My Profile</h1>
-              <p className="text-gray-500 mt-1">Manage your student account settings and personal information.</p>
+              <h1 className="text-2xl font-bold text-gray-800">Admin Profile</h1>
+              <p className="text-gray-500 mt-1">View and manage your admin account settings.</p>
             </div>
 
             {/* Success / Error alerts */}
@@ -140,7 +140,7 @@ const StudentProfilePage: React.FC = () => {
                       <p className="font-medium text-gray-800">{user?.full_name}</p>
                     </div>
                     <div>
-                      <p className="text-gray-500 mb-1">Student ID</p>
+                      <p className="text-gray-500 mb-1">Student / Admin ID</p>
                       <p className="font-medium text-gray-800">{user?.student_id || 'Not set'}</p>
                     </div>
                     <div>
@@ -169,11 +169,11 @@ const StudentProfilePage: React.FC = () => {
                   <form onSubmit={handleSave} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="student-fullname" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="admin-fullname" className="block text-sm font-medium text-gray-700 mb-1">
                           Full Name <span className="text-red-500">*</span>
                         </label>
                         <input
-                          id="student-fullname"
+                          id="admin-fullname"
                           type="text"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
@@ -182,11 +182,11 @@ const StudentProfilePage: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label htmlFor="student-studentid" className="block text-sm font-medium text-gray-700 mb-1">
-                          Student ID
+                        <label htmlFor="admin-studentid" className="block text-sm font-medium text-gray-700 mb-1">
+                          Student / Admin ID
                         </label>
                         <input
-                          id="student-studentid"
+                          id="admin-studentid"
                           type="text"
                           value={studentId}
                           onChange={(e) => setStudentId(e.target.value)}
@@ -194,11 +194,11 @@ const StudentProfilePage: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label htmlFor="student-email" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="admin-email" className="block text-sm font-medium text-gray-700 mb-1">
                           Email Address <span className="text-red-500">*</span>
                         </label>
                         <input
-                          id="student-email"
+                          id="admin-email"
                           type="email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
@@ -207,11 +207,11 @@ const StudentProfilePage: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label htmlFor="student-mobile" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="admin-mobile" className="block text-sm font-medium text-gray-700 mb-1">
                           Mobile Number
                         </label>
                         <input
-                          id="student-mobile"
+                          id="admin-mobile"
                           type="text"
                           value={mobileNumber}
                           onChange={(e) => setMobileNumber(e.target.value)}
@@ -283,4 +283,4 @@ const StudentProfilePage: React.FC = () => {
   );
 };
 
-export default StudentProfilePage;
+export default AdminProfilePage;

@@ -12,8 +12,16 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import StudentDashboard from './pages/StudentDashboard';
+import Notifications from './pages/Notifications';
 import StudentProfilePage from './pages/StudentProfilePage';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProfilePage from './pages/AdminProfilePage';
+import UploadResourcesPage from './pages/UploadResourcesPage';
+import LevelUploadPage from './pages/LevelUploadPage';
+import SemesterUploadPage from './pages/SemesterUploadPage';
+import SubjectUploadPage from './pages/SubjectUploadPage';
+import CategoryUploadPage from './pages/CategoryUploadPage';
+import ManageResourcesPage from './pages/ManageResourcesPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 const App: React.FC = () => {
@@ -36,10 +44,58 @@ const App: React.FC = () => {
             }
           />
           <Route
+            path="/student/notifications"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/student/profile"
             element={
               <ProtectedRoute allowedRole="student">
                 <StudentProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/resources"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <UploadResourcesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/resources/:level"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <LevelUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/resources/:level/:semester"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <SemesterUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/resources/:level/:semester/:subject"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <SubjectUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/resources/:level/:semester/:subject/:category"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <CategoryUploadPage />
               </ProtectedRoute>
             }
           />
@@ -50,6 +106,62 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute allowedRole="admin">
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/profile"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/resources"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <ManageResourcesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/upload-resources"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <UploadResourcesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/upload-resources/:level"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <LevelUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/upload-resources/:level/:semester"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <SemesterUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/upload-resources/:level/:semester/:subject"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <SubjectUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/upload-resources/:level/:semester/:subject/:category"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <CategoryUploadPage />
               </ProtectedRoute>
             }
           />

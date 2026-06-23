@@ -92,3 +92,24 @@ BEGIN
     );
 END
 GO
+
+-- ============================================================
+-- Table: notifications
+-- Stores notifications for users
+-- ============================================================
+IF NOT EXISTS (
+    SELECT * FROM INFORMATION_SCHEMA.TABLES
+    WHERE TABLE_NAME = 'notifications' AND TABLE_CATALOG = 'unispace_db'
+)
+BEGIN
+    CREATE TABLE notifications (
+        id INT IDENTITY(1,1) PRIMARY KEY,
+        user_id INT NOT NULL,
+        message NVARCHAR(500) NOT NULL,
+        resource_path NVARCHAR(500) NULL,
+        is_read BIT DEFAULT 0,
+        created_at DATETIME2 DEFAULT GETDATE(),
+        CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+END
+GO

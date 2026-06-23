@@ -12,7 +12,7 @@
 // on any Windows machine with LocalDB installed.
 // ============================================================
 
-import sql from 'mssql';
+import sql from 'mssql/msnodesqlv8';
 import dotenv from 'dotenv';
 import { execSync } from 'child_process';
 import net from 'net';
@@ -104,12 +104,14 @@ async function buildConfig(): Promise<sql.config> {
 
   // Full SQL Server (TCP / SQL Auth)
   return {
+    driver: 'ODBC Driver 17 for SQL Server',
     server: serverEnv,
     database: process.env.DB_NAME || 'unispace_db',
     user: process.env.DB_USER || 'sa',
     password: process.env.DB_PASSWORD || '',
-    port: Number(process.env.DB_PORT) || 1433,
+    // port: Number(process.env.DB_PORT) || 1433, // Removed to allow Named Pipes/Shared Memory fallback
     options: {
+      trustedConnection: true,
       trustServerCertificate: true,
       encrypt: false,
     },

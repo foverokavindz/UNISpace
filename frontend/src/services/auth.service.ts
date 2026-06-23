@@ -1,10 +1,13 @@
-// ============================================================
-// src/services/auth.service.ts
-// Functions for calling the auth API endpoints
-// ============================================================
-
 import api from './api';
-import type { ApiResponse, AuthData, LoginFormData, RegisterFormData, ForgotPasswordRequest, VerifyOtpRequest, ResetPasswordRequest } from '../types';
+import type { ApiResponse, AuthData, LoginFormData, RegisterFormData, ForgotPasswordRequest, VerifyOtpRequest, ResetPasswordRequest, User } from '../types';
+
+// Data sent when updating profile
+export interface UpdateProfileData {
+  full_name: string;
+  email: string;
+  mobile_number?: string;
+  student_id?: string;
+}
 
 // Call POST /api/auth/register
 export const registerUser = async (
@@ -25,6 +28,14 @@ export const loginUser = async (
 // Call GET /api/auth/me
 export const getCurrentUser = async (): Promise<ApiResponse<AuthData['user']>> => {
   const response = await api.get<ApiResponse<AuthData['user']>>('/auth/me');
+  return response.data;
+};
+
+// Call PUT /api/auth/profile
+export const updateProfile = async (
+  data: UpdateProfileData
+): Promise<ApiResponse<User>> => {
+  const response = await api.put<ApiResponse<User>>('/auth/profile', data);
   return response.data;
 };
 

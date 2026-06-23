@@ -6,7 +6,10 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import authRoutes from './routes/auth.routes';
+import resourceRoutes from './routes/resource.routes';
+import notificationRoutes from './routes/notification.routes';
 
 dotenv.config();
 
@@ -18,7 +21,7 @@ const app: Application = express();
 
 // Enable CORS so the React frontend (different port) can call us
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite dev server default port
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'], // Vite dev server default ports
   credentials: true,
 }));
 
@@ -39,6 +42,15 @@ app.get('/api/health', (_req: Request, res: Response) => {
 
 // Auth routes
 app.use('/api/auth', authRoutes);
+
+// Resource routes
+app.use('/api/resources', resourceRoutes);
+
+// Notification routes
+app.use('/api/notifications', notificationRoutes);
+
+// Serve static uploads
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
 // ----------------------------------------------------------
 // 404 handler — for any undefined routes

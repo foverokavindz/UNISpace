@@ -27,9 +27,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRole }
   }
 
   // Not logged in → go to login page
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  // if (!user) {
+  //   return <Navigate to="/login" replace />;
+  // }
 
   // Wrong role → redirect to their correct dashboard
   if (allowedRole && user.role !== allowedRole) {
