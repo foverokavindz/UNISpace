@@ -4,18 +4,24 @@
 // ============================================================
 
 import app from './app';
-import { testConnection } from './config/database';
+import { testConnection, getPool } from './config/database';
 
 const PORT = process.env.PORT || 5000;
 
 const startServer = async (): Promise<void> => {
-  // Test SQL Server connection before accepting requests
-  await testConnection();
-
+  // Start the HTTP server first so /api/health always works
   app.listen(PORT, () => {
     console.log(`🚀 UNISpace API running at http://localhost:${PORT}`);
     console.log(`   Environment: ${process.env.NODE_ENV || 'development'}`);
   });
+
+  // Then try to connect to the database
+  try {
+    await testConnection();
+  } catch (error) {
+    console.error('⚠️ Database connection failed — API routes that need DB will not work until DB is available.');
+  }
 };
 
 startServer();
+

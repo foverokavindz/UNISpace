@@ -113,3 +113,81 @@ BEGIN
     );
 END
 GO
+-- ============================================================
+-- Table: resources
+-- Stores academic resources (notes, slides, past papers, etc.)
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='resources' AND xtype='U')
+CREATE TABLE resources (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    title NVARCHAR(255) NOT NULL,
+    description NVARCHAR(MAX),
+    file_path NVARCHAR(500) NOT NULL,
+    original_name NVARCHAR(255) NOT NULL,
+    mime_type NVARCHAR(100),
+    level NVARCHAR(50),
+    semester NVARCHAR(50),
+    subject NVARCHAR(50),
+    category NVARCHAR(50),
+    created_at DATETIME2 DEFAULT GETDATE()
+);
+GO
+
+-- ============================================================
+-- Table: quizzes
+-- Stores details of quizzes (MCQ or Document-based)
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='quizzes' AND xtype='U')
+CREATE TABLE quizzes (
+    id            INT           IDENTITY(1,1) PRIMARY KEY,
+    title         NVARCHAR(255) NOT NULL,
+    type          NVARCHAR(10)  NOT NULL CONSTRAINT chk_quiz_type CHECK (type IN ('mcq', 'document')),
+    level         NVARCHAR(50)  NOT NULL,
+    semester      NVARCHAR(50)  NOT NULL,
+    edu_stream    NVARCHAR(50)  NOT NULL,
+    time_limit    INT           NOT NULL DEFAULT 10,
+    created_by    INT           NOT NULL,
+    created_at    DATETIME2     NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT fk_quizzes_user FOREIGN KEY (created_by) REFERENCES users(id)
+);
+GO
+
+-- ============================================================
+-- Table: quiz_questions
+-- Stores questions for MCQ quizzes
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='quiz_questions' AND xtype='U')
+CREATE TABLE quiz_questions (
+    id            INT           IDENTITY(1,1) PRIMARY KEY,
+    quiz_id       INT           NOT NULL,
+    question_num  INT           NOT NULL,
+    question_text NVARCHAR(MAX) NOT NULL,
+    option_a      NVARCHAR(500) NOT NULL,
+    option_b      NVARCHAR(500) NOT NULL,
+    option_c      NVARCHAR(500) NOT NULL,
+    option_d      NVARCHAR(500) NOT NULL,
+    correct_option NVARCHAR(1)  NOT NULL CONSTRAINT chk_correct_opt CHECK (correct_option IN ('A', 'B', 'C', 'D')),
+    CONSTRAINT fk_questions_quiz FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+GO
+
+-- ============================================================
+-- Table: quiz_submissions
+-- Stores quiz submission files or MCQ scores for students
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='quiz_submissions' AND xtype='U')
+CREATE TABLE quiz_submissions (
+    id            INT           IDENTITY(1,1) PRIMARY KEY,
+    quiz_id       INT           NOT NULL,
+    student_id    INT           NOT NULL,
+    answers_json  NVARCHAR(MAX) NULL,
+    score         INT           NULL,
+    total         INT           NULL,
+    file_path     NVARCHAR(500) NULL,
+    original_name NVARCHAR(255) NULL,
+    submitted_at  DATETIME2     NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT fk_submissions_quiz    FOREIGN KEY (quiz_id)    REFERENCES quizzes(id) ON DELETE CASCADE,
+    CONSTRAINT fk_submissions_student FOREIGN KEY (student_id) REFERENCES users(id),
+    CONSTRAINT uq_quiz_student UNIQUE (quiz_id, student_id)
+);
+GO

@@ -80,3 +80,66 @@ export interface ApiResponse<T = null> {
   message: string;
   data?: T;
 }
+
+// ============================================================
+// Quiz types
+// ============================================================
+
+export type QuizType = 'mcq' | 'document';
+
+export interface Quiz {
+  id: number;
+  title: string;
+  type: QuizType;
+  level: string;
+  semester: string;
+  edu_stream: string;
+  time_limit: number;      // minutes
+  created_by: number;
+  created_at: Date;
+}
+
+export interface QuizQuestion {
+  id: number;
+  quiz_id: number;
+  question_num: number;
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_option: 'A' | 'B' | 'C' | 'D';
+}
+
+export interface QuizSubmission {
+  id: number;
+  quiz_id: number;
+  student_id: number;
+  answers_json: string | null;
+  score: number | null;
+  total: number | null;
+  file_path: string | null;
+  original_name: string | null;
+  submitted_at: Date;
+}
+
+export interface CreateQuizRequest {
+  title: string;
+  type: QuizType;
+  level: string;
+  semester: string;
+  edu_stream: string;
+  time_limit?: number;
+  questions?: {
+    question_text: string;
+    option_a: string;
+    option_b: string;
+    option_c: string;
+    option_d: string;
+    correct_option: 'A' | 'B' | 'C' | 'D';
+  }[];
+}
+
+export interface SubmitMcqRequest {
+  answers: Record<string, string>;  // { "1": "A", "2": "C", ... }
+}

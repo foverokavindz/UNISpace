@@ -24,6 +24,13 @@ import CategoryUploadPage from './pages/CategoryUploadPage';
 import ManageResourcesPage from './pages/ManageResourcesPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
+// Quiz pages
+import AdminQuizListPage from './pages/AdminQuizListPage';
+import AdminCreateQuizPage from './pages/AdminCreateQuizPage';
+import AdminQuizSubmissionsPage from './pages/AdminQuizSubmissionsPage';
+import StudentQuizListPage from './pages/StudentQuizListPage';
+import StudentTakeQuizPage from './pages/StudentTakeQuizPage';
+
 const App: React.FC = () => {
   return (
     <AuthProvider>
@@ -99,6 +106,22 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/student/quizzes"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <StudentQuizListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/quizzes/:id"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <StudentTakeQuizPage />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Admin-only routes */}
           <Route
@@ -162,6 +185,30 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute allowedRole="admin">
                 <CategoryUploadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quizzes"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminQuizListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quizzes/create"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminCreateQuizPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/quizzes/:id/submissions"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminQuizSubmissionsPage />
               </ProtectedRoute>
             }
           />

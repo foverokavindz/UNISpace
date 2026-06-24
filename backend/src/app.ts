@@ -10,6 +10,7 @@ import path from 'path';
 import authRoutes from './routes/auth.routes';
 import resourceRoutes from './routes/resource.routes';
 import notificationRoutes from './routes/notification.routes';
+import quizRoutes from './routes/quiz.routes';
 
 dotenv.config();
 
@@ -48,6 +49,9 @@ app.use('/api/resources', resourceRoutes);
 
 // Notification routes
 app.use('/api/notifications', notificationRoutes);
+
+// Quiz routes
+app.use('/api/quizzes', quizRoutes);
 
 // Serve static uploads
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));

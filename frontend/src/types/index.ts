@@ -60,3 +60,51 @@ export interface ResetPasswordRequest {
   otp: string;
   new_password: string;
 }
+
+// ============================================================
+// Quiz types
+// ============================================================
+
+export type QuizType = 'mcq' | 'document';
+
+export interface Quiz {
+  id: number;
+  title: string;
+  type: QuizType;
+  level: string;
+  semester: string;
+  edu_stream: string;
+  time_limit: number;
+  created_by: number;
+  created_at: string;
+  creator_name?: string;
+  submitted?: boolean;
+}
+
+export interface QuizQuestion {
+  id: number;
+  quiz_id: number;
+  question_num: number;
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_option?: string; // hidden from students before submission
+}
+
+export interface QuizSubmission {
+  id: number;
+  quiz_id: number;
+  student_id: number;
+  answers_json: string | null;
+  score: number | null;
+  total: number | null;
+  file_path: string | null;
+  original_name: string | null;
+  submitted_at: string;
+  student_name?: string;
+  student_reg_id?: string;
+  student_email?: string;
+}
+

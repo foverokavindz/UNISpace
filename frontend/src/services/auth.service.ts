@@ -21,6 +21,42 @@ export const registerUser = async (
 export const loginUser = async (
   data: LoginFormData
 ): Promise<ApiResponse<AuthData>> => {
+
+  const isMock = import.meta.env.VITE_IS_MOCK === 'true';
+  if (isMock) {
+    const isAdmin = data.email === 'admin@test.com';
+
+    // Mock data
+    const mockUserData: User = {
+      id: isAdmin ? 2 : 1,
+      full_name: isAdmin ? 'System Admin' : 'John Doe',
+      email: data.email,
+      student_id: isAdmin ? 'ADMIN001' : 'STU2026001',
+      mobile_number: '+94771234567',
+      role: isAdmin ? 'admin' : 'student',
+      created_at: new Date().toISOString(),
+    };
+
+    const mockAuthData: AuthData = {
+      token: 'mock-jwt-token-123',
+      user: mockUserData,
+    };
+
+    // Mock API response
+    const mockResponse: ApiResponse<AuthData> = {
+      success: true,
+      message: 'Login successful',
+      data: mockAuthData,
+    };
+
+    // Simulate API delay
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(mockResponse);
+      }, 500);
+    });
+
+  }
   const response = await api.post<ApiResponse<AuthData>>('/auth/login', data);
   return response.data;
 };
