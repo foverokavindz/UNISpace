@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import api from '../services/api';
+import ResourceComments from '../components/ResourceComments';
 
 const StudentDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -162,11 +163,16 @@ const StudentDashboard: React.FC = () => {
               {filteredResources.length > 0 ? (
                 <div className="flex flex-col gap-2">
                   {filteredResources.map((r: any) => (
-                    <div key={r.id} className="py-2 cursor-pointer text-left group border-b border-gray-100 last:border-0" onClick={() => handleOpenResource(r)}>
-                      <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">{r.title}</h3>
-                      <p className="text-sm text-gray-500 mt-1">
-                        Level {r.level} • {formatText(r.semester)} • {formatText(r.subject)} • {formatText(r.category)}
-                      </p>
+                    <div key={r.id} className="py-2 text-left group border-b border-gray-100 last:border-0 flex items-start justify-between gap-2">
+                      <div className="flex-1 cursor-pointer" onClick={() => handleOpenResource(r)}>
+                        <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">{r.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Level {r.level} • {formatText(r.semester)} • {formatText(r.subject)} • {formatText(r.category)}
+                        </p>
+                      </div>
+                      <div className="flex-shrink-0 mt-1">
+                        <ResourceComments resourceId={r.id} resourceName={r.title || r.original_name} />
+                      </div>
                     </div>
                   ))}
                 </div>

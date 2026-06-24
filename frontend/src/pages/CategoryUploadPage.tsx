@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
+import ResourceComments from '../components/ResourceComments';
 
 interface Resource {
   id: number;
@@ -447,6 +448,7 @@ const CategoryUploadPage: React.FC = () => {
                           >
                             ⬇️ Download
                           </a>
+                          <ResourceComments resourceId={resource.id} resourceName={resource.original_name} />
                           {isAdmin && (
                             <button
                               onClick={() => startRename(resource)}

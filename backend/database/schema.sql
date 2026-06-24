@@ -191,3 +191,19 @@ CREATE TABLE quiz_submissions (
     CONSTRAINT uq_quiz_student UNIQUE (quiz_id, student_id)
 );
 GO
+
+-- ============================================================
+-- Table: resource_comments
+-- Stores per-resource discussion messages (chat-style)
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='resource_comments' AND xtype='U')
+CREATE TABLE resource_comments (
+    id           INT           IDENTITY(1,1) PRIMARY KEY,
+    resource_id  INT           NOT NULL,
+    user_id      INT           NOT NULL,
+    message      NVARCHAR(MAX) NOT NULL,
+    created_at   DATETIME2     NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT fk_comments_resource FOREIGN KEY (resource_id) REFERENCES resources(id) ON DELETE CASCADE,
+    CONSTRAINT fk_comments_user     FOREIGN KEY (user_id)     REFERENCES users(id)
+);
+GO
