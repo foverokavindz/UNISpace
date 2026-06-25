@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const SemesterUploadPage: React.FC = () => {
@@ -18,12 +17,7 @@ const SemesterUploadPage: React.FC = () => {
   const routePrefix = isAdmin ? '/admin/upload-resources' : '/student/resources';
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        {/* Main content area */}
-        <main className="flex-1 p-8 bg-gray-50 flex flex-col">
+    <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mt-8 mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">
@@ -72,9 +66,7 @@ const SemesterUploadPage: React.FC = () => {
               </button>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

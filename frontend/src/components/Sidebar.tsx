@@ -33,18 +33,20 @@ const Sidebar: React.FC = () => {
   const links = user?.role === 'admin' ? adminLinks : studentLinks;
 
   return (
-    <aside className="w-56 bg-gray-800 text-gray-100 min-h-screen flex flex-col py-6 px-4">
-      <p className="text-xs uppercase text-gray-400 mb-4 tracking-widest">Navigation</p>
-      <nav className="flex flex-col gap-1">
+    <aside className="w-56 shrink-0 bg-slate-900 text-slate-100 overflow-y-auto flex flex-col py-6 px-3">
+      <p className="text-[11px] font-medium uppercase text-slate-500 mb-3 px-3 tracking-wider">
+        Navigation
+      </p>
+      <nav className="flex flex-col gap-1.5">
         {links.map((link) => (
           <NavLink
             key={link.path}
             to={link.path}
             className={({ isActive }) =>
-              `px-4 py-2 rounded text-sm font-medium transition ${
+              `px-3 py-2.5 rounded-md text-sm transition ${
                 isActive
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-300 hover:bg-gray-700'
+                  ? 'bg-primary text-white font-medium'
+                  : 'text-slate-400 hover:bg-white/10 hover:text-white'
               }`
             }
           >

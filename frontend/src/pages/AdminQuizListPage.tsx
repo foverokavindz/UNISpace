@@ -5,8 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import api from '../services/api';
 import type { Quiz } from '../types';
 
@@ -55,11 +54,7 @@ const AdminQuizListPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">Quizzes 📝</h1>
@@ -157,9 +152,7 @@ const AdminQuizListPage: React.FC = () => {
               </table>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

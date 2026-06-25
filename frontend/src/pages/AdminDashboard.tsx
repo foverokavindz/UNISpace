@@ -5,8 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import {
@@ -165,16 +164,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Top navbar */}
-      <Navbar />
-
-      <div className="flex flex-1">
-        {/* Left sidebar */}
-        <Sidebar />
-
-        {/* Main content area */}
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           {/* Welcome message */}
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-gray-800">
@@ -331,9 +321,7 @@ const AdminDashboard: React.FC = () => {
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

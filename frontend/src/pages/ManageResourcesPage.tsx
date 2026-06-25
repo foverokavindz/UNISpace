@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
@@ -104,11 +103,7 @@ const ManageResourcesPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50 flex flex-col">
+    <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">
@@ -229,9 +224,7 @@ const ManageResourcesPage: React.FC = () => {
               </table>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

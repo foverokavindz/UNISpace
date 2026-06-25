@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import ResourceComments from '../components/ResourceComments';
@@ -217,11 +216,7 @@ const CategoryUploadPage: React.FC = () => {
   const serverRoot = API_BASE_URL.replace('/api', '');
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50 flex flex-col">
+    <Layout mainClassName="flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between mt-8 mb-8 border-b border-gray-200 pb-4">
             <div>
@@ -529,9 +524,7 @@ const CategoryUploadPage: React.FC = () => {
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

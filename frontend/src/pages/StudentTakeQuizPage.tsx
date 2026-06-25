@@ -6,8 +6,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import api from '../services/api';
 import type { Quiz, QuizQuestion, QuizSubmission } from '../types';
 
@@ -183,43 +182,27 @@ const StudentTakeQuizPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <div className="flex flex-1">
-          <Sidebar />
-          <main className="flex-1 p-8 bg-gray-50 flex items-center justify-center">
+      <Layout mainClassName="flex items-center justify-center">
             <svg className="animate-spin h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-          </main>
-        </div>
-      </div>
+          </Layout>
     );
   }
 
   if (!quiz) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <div className="flex flex-1">
-          <Sidebar />
-          <main className="flex-1 p-8 bg-gray-50">
+      <Layout>
             <p className="text-red-600">Quiz not found.</p>
-          </main>
-        </div>
-      </div>
+          </Layout>
     );
   }
 
   // Already submitted document quiz
   if (quiz.type === 'document' && submission) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <div className="flex flex-1">
-          <Sidebar />
-          <main className="flex-1 p-8 bg-gray-50">
+      <Layout>
             <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-8 border border-gray-100 text-center">
               <h1 className="text-2xl font-bold text-gray-800 mb-4">✅ Already Submitted</h1>
               <p className="text-gray-500 mb-2">You have already submitted your document for this quiz.</p>
@@ -231,18 +214,12 @@ const StudentTakeQuizPage: React.FC = () => {
                 Back to Quizzes
               </button>
             </div>
-          </main>
-        </div>
-      </div>
+          </Layout>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           {/* Header with timer */}
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -438,9 +415,7 @@ const StudentTakeQuizPage: React.FC = () => {
               </div>
             </div>
           )}
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

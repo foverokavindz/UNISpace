@@ -5,8 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import JitsiRoom from '../components/JitsiRoom';
 import { useAuth } from '../context/AuthContext';
 import { getSession, joinSession, deleteSession } from '../services/session.service';
@@ -86,11 +85,7 @@ const SessionPage: React.FC = () => {
   const isFuture = !!(session && new Date(session.scheduled_at).getTime() > Date.now());
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           <div className="flex items-center justify-between mb-6">
             <button
               onClick={() => navigate(`${base}/sessions`)}
@@ -184,9 +179,7 @@ const SessionPage: React.FC = () => {
               </div>
             </div>
           )}
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

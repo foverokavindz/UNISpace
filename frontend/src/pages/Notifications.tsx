@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import api from '../services/api';
 
 const Notifications: React.FC = () => {
@@ -48,11 +47,7 @@ const Notifications: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           <h1 className="text-2xl font-bold text-gray-800 mb-6">Notifications</h1>
 
           <div className="bg-white rounded shadow p-6">
@@ -170,9 +165,7 @@ const Notifications: React.FC = () => {
               </div>
             )}
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 
 const UploadResourcesPage: React.FC = () => {
@@ -12,16 +11,7 @@ const UploadResourcesPage: React.FC = () => {
   const routePrefix = isAdmin ? '/admin/upload-resources' : '/student/resources';
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Top navbar */}
-      <Navbar />
-
-      <div className="flex flex-1">
-        {/* Left sidebar */}
-        <Sidebar />
-
-        {/* Main content area */}
-        <main className="flex-1 p-8 bg-gray-50 flex flex-col">
+    <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mt-8 mb-8">
             <div>
               <h1 className="text-5xl font-bold text-gray-800">
@@ -70,9 +60,7 @@ const UploadResourcesPage: React.FC = () => {
               </button>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

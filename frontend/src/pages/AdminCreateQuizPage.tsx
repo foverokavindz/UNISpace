@@ -5,8 +5,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import api from '../services/api';
 import { DUMMY_QUIZZES } from '../_mock/dummyQuizzes';
 import type { QuestionInput } from '../_mock/dummyQuizzes';
@@ -118,11 +117,7 @@ const AdminCreateQuizPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-800">Create Quiz 📝</h1>
@@ -296,9 +291,7 @@ const AdminCreateQuizPage: React.FC = () => {
               </button>
             </div>
           </form>
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

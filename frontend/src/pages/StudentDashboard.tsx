@@ -6,8 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import api from '../services/api';
 import ResourceComments from '../components/ResourceComments';
 
@@ -109,16 +108,7 @@ const StudentDashboard: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Top navbar */}
-      <Navbar />
-
-      <div className="flex flex-1">
-        {/* Left sidebar */}
-        <Sidebar />
-
-        {/* Main content area */}
-        <main className="flex-1 p-8 bg-gray-50">
+    <Layout>
           {/* Welcome message */}
           <div className="mb-8 flex justify-between items-start">
             <div>
@@ -348,9 +338,7 @@ const StudentDashboard: React.FC = () => {
             </div>
           )}
 
-        </main>
-      </div>
-    </div>
+        </Layout>
   );
 };
 

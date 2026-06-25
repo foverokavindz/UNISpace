@@ -6,6 +6,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Badge, Button } from './ui';
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
@@ -17,9 +18,9 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-blue-700 text-white px-6 py-3 flex items-center justify-between shadow">
+    <nav className="shrink-0 bg-surface border-b border-border px-6 py-3 flex items-center justify-between">
       {/* Logo / App name */}
-      <div className="text-xl font-bold tracking-wide">
+      <div className="text-xl font-bold tracking-tight text-primary">
         UNISpace
       </div>
 
@@ -27,22 +28,19 @@ const Navbar: React.FC = () => {
       {user && (
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold">
+            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
               {user.full_name.charAt(0).toUpperCase()}
             </div>
-            <span className="text-sm hidden sm:inline-block">
-              {user.full_name} &nbsp;
-              <span className="bg-blue-500 px-2 py-0.5 rounded text-xs uppercase text-white border border-blue-400">
-                {user.role}
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="text-sm font-medium text-[color:var(--color-text)]">
+                {user.full_name}
               </span>
-            </span>
+              <Badge className="uppercase">{user.role}</Badge>
+            </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-white text-blue-700 px-3 py-1 rounded text-sm font-medium hover:bg-blue-50 transition ml-2"
-          >
+          <Button variant="secondary" onClick={handleLogout}>
             Logout
-          </button>
+          </Button>
         </div>
       )}
     </nav>
