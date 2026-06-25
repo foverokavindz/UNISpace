@@ -24,7 +24,7 @@ const SubjectUploadPage: React.FC = () => {
 
   return (
     <Layout mainClassName="flex flex-col">
-          <div className="flex items-center justify-between mt-8 mb-8">
+          <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
                 {isAdmin ? 'Upload Resources' : 'Resources'} - {subjectTitle} <BookOpen size={26} />

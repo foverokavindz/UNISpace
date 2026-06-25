@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Megaphone, FileText, GraduationCap, Calendar, BookOpen, Folder, Link2, ArrowRight, Clock } from 'lucide-react';
+import { Megaphone, FileText, GraduationCap, Calendar, BookOpen, Folder, Link2, ArrowRight, Clock, Bell } from 'lucide-react';
 import Layout from '../components/Layout';
 import api from '../services/api';
 
@@ -49,9 +49,14 @@ const Notifications: React.FC = () => {
 
   return (
     <Layout>
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">Notifications</h1>
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+              Notifications <Bell size={26} />
+            </h1>
+            <p className="text-gray-500 mt-1">Stay up to date with the latest resource uploads and announcements.</p>
+          </div>
 
-          <div className="bg-white rounded shadow p-6">
+          <div className="bg-white rounded-xl shadow border border-gray-100 p-6">
             {loading ? (
               <p className="text-gray-500">Loading notifications...</p>
             ) : notifications.length > 0 ? (

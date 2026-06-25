@@ -224,7 +224,7 @@ const CategoryUploadPage: React.FC = () => {
   return (
     <Layout mainClassName="flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between mt-8 mb-8 border-b border-gray-200 pb-4">
+          <div className="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
                 {categoryTitle} <BookOpen size={26} />

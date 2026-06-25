@@ -113,7 +113,7 @@ const StudentDashboard: React.FC = () => {
           {/* Welcome message */}
           <div className="mb-8 flex justify-between items-start">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">
+              <h1 className="text-3xl font-bold text-gray-800">
                 Welcome back, {user?.full_name}!
               </h1>
               <p className="text-gray-500 mt-1">
@@ -149,7 +149,7 @@ const StudentDashboard: React.FC = () => {
           </div>
 
           {executedTerm && (
-            <div className="mb-8 bg-white p-6 rounded shadow">
+            <div className="mb-8 bg-white p-6 rounded-xl shadow border border-gray-100">
               <h2 className="text-lg font-bold mb-4">Search Results for "{executedTerm}"</h2>
               {filteredResources.length > 0 ? (
                 <div className="flex flex-col gap-2">
@@ -182,7 +182,7 @@ const StudentDashboard: React.FC = () => {
               {/* Upcoming Events removed */}
 
               {/* Recent Resources */}
-            <div className="bg-white rounded shadow p-6">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-6">
               <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Recent Resources</h2>
               {recentResource ? (
                 <div className="p-4 border rounded hover:border-blue-500 transition cursor-pointer" onClick={() => handleOpenResource(recentResource)}>
@@ -201,7 +201,7 @@ const StudentDashboard: React.FC = () => {
             <div className="flex flex-col gap-8">
               
               {/* Mini Calendar UI */}
-              <div className="bg-white rounded shadow p-6">
+              <div className="bg-white rounded-xl shadow border border-gray-100 p-6">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-semibold text-gray-800">Event Calendar</h2>
                   <span className="text-sm font-medium text-blue-600 cursor-pointer">May 2026</span>
@@ -262,7 +262,7 @@ const StudentDashboard: React.FC = () => {
               </div>
 
               {/* Notifications */}
-              <div className="bg-white rounded shadow p-6">
+              <div className="bg-white rounded-xl shadow border border-gray-100 p-6">
                 <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Notifications</h2>
                 <div className="flex flex-col gap-3">
                   <div className="flex items-start gap-3 p-3 bg-blue-50 rounded text-sm text-blue-900">
