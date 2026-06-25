@@ -56,6 +56,38 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     restoreSession();
   }, []);
 
+  // Sync auth state across browser tabs.
+  // The `storage` event fires in OTHER tabs whenever localStorage changes,
+  // so a login/logout in one tab is reflected everywhere.
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key !== 'token') return;
+
+      if (!e.newValue) {
+        // Token removed elsewhere (logout) — clear local state
+        setToken(null);
+        setUser(null);
+        return;
+      }
+
+      // Token added/changed elsewhere (login) — restore session
+      setToken(e.newValue);
+      getCurrentUser()
+        .then((response) => {
+          if (response.success && response.data) {
+            setUser(response.data);
+          }
+        })
+        .catch(() => {
+          setToken(null);
+          setUser(null);
+        });
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
   // Called after successful login or registration
   const login = (newToken: string, newUser: User) => {
     localStorage.setItem('token', newToken);
