@@ -32,7 +32,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRole }
   // }
 
   // Wrong role → redirect to their correct dashboard
-  if (allowedRole && user.role !== allowedRole) {
+  if (allowedRole && user && user.role !== allowedRole) {
     const redirectPath = user.role === 'admin' ? '/admin/dashboard' : '/student/dashboard';
     return <Navigate to={redirectPath} replace />;
   }

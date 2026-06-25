@@ -16,6 +16,7 @@ const Sidebar: React.FC = () => {
     { label: 'Profile',           path: '/student/profile' },
     { label: 'Resources',         path: '/student/resources' },
     { label: 'Quizzes',           path: '/student/quizzes' },
+    { label: 'Study Sessions',    path: '/student/sessions' },
     { label: 'Notifications',     path: '/student/notifications' },
   ];
 
@@ -26,6 +27,7 @@ const Sidebar: React.FC = () => {
     { label: 'Upload Resource',   path: '/admin/upload-resources' },
     { label: 'Manage Resources',  path: '/admin/resources' },
     { label: 'Quizzes',           path: '/admin/quizzes' },
+    { label: 'Study Sessions',    path: '/admin/sessions' },
   ];
 
   const links = user?.role === 'admin' ? adminLinks : studentLinks;

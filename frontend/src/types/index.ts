@@ -108,3 +108,43 @@ export interface QuizSubmission {
   student_email?: string;
 }
 
+// ============================================================
+// Session (live study meeting) types
+// ============================================================
+
+export type SessionStatus = 'scheduled' | 'active' | 'ended';
+
+export interface Session {
+  id: number;
+  title: string;
+  description: string | null;
+  host_id: number;
+  scheduled_at: string;
+  max_participants: number;
+  jitsi_room_name: string;
+  status: SessionStatus;
+  created_at: string;
+  updated_at: string;
+  host_name?: string;
+  participant_count?: number;
+}
+
+export interface SessionParticipant {
+  id: number;
+  session_id: number;
+  user_id: number;
+  joined_at: string;
+  user_name?: string;
+}
+
+export interface SessionDetail extends Session {
+  participants: SessionParticipant[];
+}
+
+export interface CreateSessionRequest {
+  title: string;
+  description?: string;
+  scheduled_at: string;
+  max_participants?: number;
+}
+

@@ -207,3 +207,40 @@ CREATE TABLE resource_comments (
     CONSTRAINT fk_comments_user     FOREIGN KEY (user_id)     REFERENCES users(id)
 );
 GO
+
+-- ============================================================
+-- Table: sessions
+-- Stores live study sessions (Jitsi meetings) scheduled by users
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='sessions' AND xtype='U')
+CREATE TABLE sessions (
+    id               INT           IDENTITY(1,1) PRIMARY KEY,
+    title            NVARCHAR(255) NOT NULL,
+    description      NVARCHAR(MAX) NULL,
+    host_id          INT           NOT NULL,
+    scheduled_at     DATETIME2     NOT NULL,
+    max_participants INT           NOT NULL DEFAULT 10,
+    jitsi_room_name  NVARCHAR(255) NOT NULL,
+    status           NVARCHAR(20)  NOT NULL DEFAULT 'scheduled'
+                       CONSTRAINT chk_session_status CHECK (status IN ('scheduled', 'active', 'ended')),
+    created_at       DATETIME2     NOT NULL DEFAULT GETDATE(),
+    updated_at       DATETIME2     NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT fk_sessions_host FOREIGN KEY (host_id) REFERENCES users(id)
+);
+GO
+
+-- ============================================================
+-- Table: session_participants
+-- Tracks which users have joined which sessions
+-- ============================================================
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='session_participants' AND xtype='U')
+CREATE TABLE session_participants (
+    id         INT       IDENTITY(1,1) PRIMARY KEY,
+    session_id INT       NOT NULL,
+    user_id    INT       NOT NULL,
+    joined_at  DATETIME2 NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT fk_sp_session FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE,
+    CONSTRAINT fk_sp_user    FOREIGN KEY (user_id)    REFERENCES users(id),
+    CONSTRAINT uq_session_user UNIQUE (session_id, user_id)
+);
+GO

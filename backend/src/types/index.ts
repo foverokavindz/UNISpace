@@ -143,3 +143,39 @@ export interface CreateQuizRequest {
 export interface SubmitMcqRequest {
   answers: Record<string, string>;  // { "1": "A", "2": "C", ... }
 }
+
+// ============================================================
+// Session (live study meeting) types
+// ============================================================
+
+export type SessionStatus = 'scheduled' | 'active' | 'ended';
+
+export interface Session {
+  id: number;
+  title: string;
+  description: string | null;
+  host_id: number;
+  scheduled_at: Date;
+  max_participants: number;
+  jitsi_room_name: string;
+  status: SessionStatus;
+  created_at: Date;
+  updated_at: Date;
+  host_name?: string;          // joined from users
+  participant_count?: number;  // computed
+}
+
+export interface SessionParticipant {
+  id: number;
+  session_id: number;
+  user_id: number;
+  joined_at: Date;
+  user_name?: string;          // joined from users
+}
+
+export interface CreateSessionRequest {
+  title: string;
+  description?: string;
+  scheduled_at: string;        // ISO datetime from the client
+  max_participants?: number;
+}

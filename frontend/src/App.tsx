@@ -31,6 +31,10 @@ import AdminQuizSubmissionsPage from './pages/AdminQuizSubmissionsPage';
 import StudentQuizListPage from './pages/StudentQuizListPage';
 import StudentTakeQuizPage from './pages/StudentTakeQuizPage';
 
+// Session pages (shared by both roles)
+import SessionsCalendarPage from './pages/SessionsCalendarPage';
+import SessionPage from './pages/SessionPage';
+
 const App: React.FC = () => {
   return (
     <AuthProvider>
@@ -122,6 +126,22 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/student/sessions"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <SessionsCalendarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/student/sessions/:id"
+            element={
+              <ProtectedRoute allowedRole="student">
+                <SessionPage />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Admin-only routes */}
           <Route
@@ -209,6 +229,22 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute allowedRole="admin">
                 <AdminQuizSubmissionsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/sessions"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <SessionsCalendarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/sessions/:id"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <SessionPage />
               </ProtectedRoute>
             }
           />

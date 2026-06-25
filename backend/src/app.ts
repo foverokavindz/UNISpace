@@ -12,6 +12,7 @@ import resourceRoutes from './routes/resource.routes';
 import notificationRoutes from './routes/notification.routes';
 import quizRoutes from './routes/quiz.routes';
 import commentRoutes from './routes/comment.routes';
+import sessionRoutes from './routes/session.routes';
 
 dotenv.config();
 
@@ -53,6 +54,9 @@ app.use('/api/notifications', notificationRoutes);
 
 // Quiz routes
 app.use('/api/quizzes', quizRoutes);
+
+// Session routes
+app.use('/api/sessions', sessionRoutes);
 
 // Comment routes (nested under /api/resources/:resourceId/comments)
 app.use('/api/resources', commentRoutes);
