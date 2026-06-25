@@ -9,42 +9,47 @@ import { useAuth } from '../context/AuthContext';
 import { Badge, Button } from './ui';
 
 const Navbar: React.FC = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
-  return (
-    <nav className="shrink-0 bg-surface border-b border-border px-6 py-3 flex items-center justify-between">
-      {/* Logo / App name */}
-      <div className="text-xl font-bold tracking-tight text-primary">
-        UNISpace
-      </div>
-
-      {/* User info + logout */}
-      {user && (
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
-              {user.full_name.charAt(0).toUpperCase()}
+    return (
+        <nav className="shrink-0 bg-surface border-b border-border px-6 py-3 flex items-center justify-between">
+            {/* Logo / App name */}
+            <div className="flex flex-row items-center gap-2">
+                <div className="text-xl font-bold tracking-tight text-primary">
+                    UNISpace
+                </div>|
+                <div className="text-sm text-muted-foreground">
+                    Connect. Collaborate. Create.
+                </div>
             </div>
-            <div className="hidden sm:flex items-center gap-2">
-              <span className="text-sm font-medium text-[color:var(--color-text)]">
-                {user.full_name}
-              </span>
-              <Badge className="uppercase">{user.role}</Badge>
-            </div>
-          </div>
-          <Button variant="secondary" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
-      )}
-    </nav>
-  );
+
+            {/* User info + logout */}
+            {user && (
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                            {user.full_name.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="hidden sm:flex items-center gap-2">
+                            <span className="text-sm font-medium text-[color:var(--color-text)]">
+                                {user.full_name}
+                            </span>
+                            <Badge className="uppercase">{user.role}</Badge>
+                        </div>
+                    </div>
+                    <Button variant="secondary" onClick={handleLogout}>
+                        Logout
+                    </Button>
+                </div>
+            )}
+        </nav>
+    );
 };
 
 export default Navbar;
