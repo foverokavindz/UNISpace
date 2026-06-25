@@ -93,6 +93,16 @@ export interface QuizQuestion {
   correct_option?: string; // hidden from students before submission
 }
 
+// Shape used when authoring quiz questions in the create form
+export interface QuestionInput {
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_option: string;
+}
+
 export interface QuizSubmission {
   id: number;
   quiz_id: number;

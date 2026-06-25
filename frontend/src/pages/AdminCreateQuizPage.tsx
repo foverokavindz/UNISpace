@@ -3,13 +3,13 @@
 // Admin form to create MCQ or Document quiz
 // ============================================================
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Papa from 'papaparse';
 import Layout from '../components/Layout';
-import { FileText, Zap, Check } from 'lucide-react';
+import { FileText, Check, Plus, Trash2, Upload, Info } from 'lucide-react';
 import api from '../services/api';
-import { DUMMY_QUIZZES } from '../_mock/dummyQuizzes';
-import type { QuestionInput } from '../_mock/dummyQuizzes';
+import type { QuestionInput } from '../types';
 
 const LEVELS = ['1', '2', '3', '4'];
 const SEMESTERS = ['semester-1', 'semester-2'];
@@ -33,35 +33,72 @@ const AdminCreateQuizPage: React.FC = () => {
   const [semester, setSemester] = useState('');
   const [eduStream, setEduStream] = useState('');
   const [timeLimit, setTimeLimit] = useState(10);
-  const [questions, setQuestions] = useState<QuestionInput[]>(
-    Array.from({ length: 10 }, () => emptyQuestion())
-  );
+  const [questions, setQuestions] = useState<QuestionInput[]>([emptyQuestion()]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  // ----------------------------------------------------------
-  // Load a dummy quiz set into all form fields
-  // ----------------------------------------------------------
-  const handleLoadDummy = (index: string) => {
-    if (!index) return;
-    const dummy = DUMMY_QUIZZES[parseInt(index)];
-    if (!dummy) return;
-
-    setTitle(dummy.title);
-    setType('mcq');
-    setLevel(dummy.level);
-    setSemester(dummy.semester);
-    setEduStream(dummy.eduStream);
-    setTimeLimit(dummy.timeLimit);
-    setQuestions([...dummy.questions]);
-    setErrorMsg(null);
-  };
+  const csvInputRef = useRef<HTMLInputElement>(null);
 
   const updateQuestion = (index: number, field: keyof QuestionInput, value: string) => {
     setQuestions(prev => {
       const updated = [...prev];
       updated[index] = { ...updated[index], [field]: value };
       return updated;
+    });
+  };
+
+  const addQuestion = () => setQuestions(prev => [...prev, emptyQuestion()]);
+
+  const removeQuestion = (index: number) => {
+    setQuestions(prev => (prev.length > 1 ? prev.filter((_, i) => i !== index) : prev));
+  };
+
+  // ----------------------------------------------------------
+  // Import questions from a CSV file (replaces current blocks)
+  // Expected columns: question_text, option_a, option_b,
+  //                   option_c, option_d, correct_option (A/B/C/D)
+  // ----------------------------------------------------------
+  const handleCsvImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    Papa.parse<Record<string, string>>(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        // reset input so re-importing the same file fires onChange again
+        if (csvInputRef.current) csvInputRef.current.value = '';
+
+        const rows = results.data || [];
+        if (rows.length === 0) {
+          setErrorMsg('The CSV file has no question rows.');
+          return;
+        }
+
+        const parsed: QuestionInput[] = [];
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const correct = (row.correct_option || '').trim().toUpperCase();
+          if (!['A', 'B', 'C', 'D'].includes(correct)) {
+            setErrorMsg(`Row ${i + 1}: correct_option must be A, B, C, or D (got "${row.correct_option ?? ''}").`);
+            return;
+          }
+          parsed.push({
+            question_text: (row.question_text || '').trim(),
+            option_a: (row.option_a || '').trim(),
+            option_b: (row.option_b || '').trim(),
+            option_c: (row.option_c || '').trim(),
+            option_d: (row.option_d || '').trim(),
+            correct_option: correct,
+          });
+        }
+
+        setQuestions(parsed);
+        setType('mcq');
+        setErrorMsg(null);
+      },
+      error: (err) => {
+        setErrorMsg(`Failed to parse CSV: ${err.message}`);
+      },
     });
   };
 
@@ -75,6 +112,10 @@ const AdminCreateQuizPage: React.FC = () => {
     }
 
     if (type === 'mcq') {
+      if (questions.length < 1) {
+        setErrorMsg('Add at least one question.');
+        return;
+      }
       for (let i = 0; i < questions.length; i++) {
         const q = questions[i];
         if (!q.question_text.trim() || !q.option_a.trim() || !q.option_b.trim() || !q.option_c.trim() || !q.option_d.trim()) {
@@ -133,24 +174,6 @@ const AdminCreateQuizPage: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 border border-gray-100 space-y-6">
-            {/* ── Dummy Data Loader ── */}
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center gap-4">
-              <Zap size={20} className="text-amber-600 shrink-0" />
-              <div className="flex-1">
-                <label className="block text-sm font-semibold text-amber-800 mb-1">Quick Fill — Load Dummy Quiz Data</label>
-                <select
-                  defaultValue=""
-                  onChange={(e) => handleLoadDummy(e.target.value)}
-                  className="w-full md:w-96 border border-amber-300 bg-white rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-amber-400 outline-none cursor-pointer"
-                >
-                  <option value="">— Select a pre-built quiz to auto-fill —</option>
-                  {DUMMY_QUIZZES.map((dq, i) => (
-                    <option key={i} value={String(i)}>{dq.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
             {errorMsg && (
               <div className="p-3 bg-red-50 text-red-800 border border-red-200 rounded-lg text-sm">
                 {errorMsg}
@@ -232,10 +255,55 @@ const AdminCreateQuizPage: React.FC = () => {
             {/* MCQ Questions */}
             {type === 'mcq' && (
               <div className="space-y-6">
-                <h2 className="text-lg font-semibold text-gray-800 border-b pb-2">Questions (10 required)</h2>
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-2">
+                  <h2 className="text-lg font-semibold text-gray-800">Questions ({questions.length})</h2>
+                  {/* CSV import button with hover helper */}
+                  <div className="relative group">
+                    <button
+                      type="button"
+                      onClick={() => csvInputRef.current?.click()}
+                      className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition font-semibold text-sm"
+                    >
+                      <Upload size={16} /> Import CSV
+                      <Info size={14} className="opacity-80" />
+                    </button>
+                    <input
+                      ref={csvInputRef}
+                      type="file"
+                      accept=".csv,text/csv"
+                      onChange={handleCsvImport}
+                      className="hidden"
+                    />
+                    {/* Tooltip */}
+                    <div className="absolute right-0 z-10 mt-2 w-80 hidden group-hover:block bg-gray-900 text-white text-xs rounded-lg p-3 shadow-lg">
+                      <p className="font-semibold mb-1">CSV format (one row per question)</p>
+                      <p className="text-gray-300 mb-2">Header row required, columns in this order:</p>
+                      <code className="block bg-gray-800 rounded p-2 mb-2 break-words">
+                        question_text,option_a,option_b,option_c,option_d,correct_option
+                      </code>
+                      <p className="text-gray-300 mb-1">Example:</p>
+                      <code className="block bg-gray-800 rounded p-2 break-words">
+                        What is 2 + 2?,3,4,5,6,B
+                      </code>
+                      <p className="text-gray-400 mt-2">correct_option must be A, B, C, or D. Importing replaces current questions.</p>
+                    </div>
+                  </div>
+                </div>
                 {questions.map((q, idx) => (
                   <div key={idx} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                    <h3 className="font-semibold text-gray-700 mb-3">Question {idx + 1}</h3>
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-semibold text-gray-700">Question {idx + 1}</h3>
+                      {questions.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeQuestion(idx)}
+                          className="flex items-center gap-1 text-red-600 hover:text-red-800 text-xs font-semibold transition"
+                          title="Remove this question"
+                        >
+                          <Trash2 size={14} /> Remove
+                        </button>
+                      )}
+                    </div>
                     <textarea
                       value={q.question_text}
                       onChange={(e) => updateQuestion(idx, 'question_text', e.target.value)}
@@ -270,6 +338,13 @@ const AdminCreateQuizPage: React.FC = () => {
                     )}
                   </div>
                 ))}
+                <button
+                  type="button"
+                  onClick={addQuestion}
+                  className="flex items-center justify-center gap-2 w-full border-2 border-dashed border-blue-300 text-blue-600 rounded-lg py-3 hover:border-blue-400 hover:bg-blue-50 transition font-semibold text-sm"
+                >
+                  <Plus size={18} /> Add Question
+                </button>
               </div>
             )}
 

@@ -1,0 +1,11 @@
+question_text,option_a,option_b,option_c,option_d,correct_option
+What does SQL stand for?,Structured Query Language,Simple Query Language,Standard Question Language,Sequential Query Logic,A
+Which SQL statement is used to extract data from a database?,EXTRACT,GET,SELECT,PULL,C
+What is a primary key?,A key that allows duplicates,A unique identifier for each record,A foreign reference,An index type,B
+Which normal form eliminates transitive dependencies?,1NF,2NF,3NF,BCNF,C
+"What does ACID stand for in database transactions?","Atomicity, Consistency, Isolation, Durability","Access, Control, Integrity, Data","Atomic, Central, Independent, Durable","Add, Create, Insert, Delete",A
+Which JOIN returns all rows from both tables?,INNER JOIN,LEFT JOIN,RIGHT JOIN,FULL OUTER JOIN,D
+What is a foreign key?,A key from another country,A field that links two tables,A primary key duplicate,An encryption key,B
+Which command is used to remove all rows from a table without logging?,DELETE,DROP,TRUNCATE,REMOVE,C
+What is an ER diagram used for?,Error Resolution,Entity Relationship modeling,Encryption Rules,Execution Routing,B
+Which SQL clause is used to filter grouped results?,WHERE,HAVING,FILTER,GROUP BY,B

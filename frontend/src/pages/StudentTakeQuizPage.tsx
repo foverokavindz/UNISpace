@@ -116,11 +116,11 @@ const StudentTakeQuizPage: React.FC = () => {
     setValidationMsg(null);
     setErrorMsg(null);
 
-    // Validate all 10 answered
+    // Validate all questions answered
     if (!isAutoSubmit) {
       const answeredCount = Object.keys(answers).length;
-      if (answeredCount < 10) {
-        setValidationMsg(`Please answer all 10 questions. You've answered ${answeredCount}/10.`);
+      if (answeredCount < questions.length) {
+        setValidationMsg(`Please answer all ${questions.length} questions. You've answered ${answeredCount}/${questions.length}.`);
         return;
       }
     }

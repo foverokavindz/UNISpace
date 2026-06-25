@@ -1,0 +1,11 @@
+question_text,option_a,option_b,option_c,option_d,correct_option
+What does HTML stand for?,Hyper Text Markup Language,High Tech Modern Language,Hyper Transfer Markup Language,Home Tool Markup Language,A
+Which CSS property is used to change text color?,font-color,text-color,color,foreground,C
+Which HTTP method is used to update an existing resource?,GET,POST,PUT,DELETE,C
+What does REST stand for?,Representational State Transfer,Remote Execution Service Technology,Reliable Endpoint Service Tool,Resource State Transformation,A
+Which JavaScript keyword declares a block-scoped variable?,var,let,function,define,B
+What is the default port for HTTPS?,80,8080,443,3000,C
+Which React hook is used for side effects?,useState,useEffect,useRef,useMemo,B
+What does JSON stand for?,JavaScript Object Notation,Java Source Open Network,JavaScript Online Namespace,Java Standard Object Naming,A
+"Which status code means ""Not Found""?",200,301,404,500,C
+"In CSS, which selector has the highest specificity?",Element selector,Class selector,ID selector,Universal selector,C

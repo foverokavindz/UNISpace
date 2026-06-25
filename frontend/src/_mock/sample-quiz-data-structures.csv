@@ -1,0 +1,11 @@
+question_text,option_a,option_b,option_c,option_d,correct_option
+What is the time complexity of accessing an element in an array by index?,O(1),O(n),O(log n),O(n²),A
+"Which data structure uses FIFO (First In, First Out) principle?",Stack,Queue,Tree,Graph,B
+What is the worst-case time complexity of Quick Sort?,O(n log n),O(n),O(n²),O(log n),C
+Which traversal of a Binary Search Tree gives nodes in sorted order?,Pre-order,Post-order,In-order,Level-order,C
+A stack can be used to convert:,Infix to Postfix,Binary to Decimal,Decimal to Octal,ASCII to Unicode,A
+"What is the maximum number of nodes at level ""l"" of a binary tree?",2l,2^l,l²,2l+1,B
+Which of the following is NOT a linear data structure?,Array,Linked List,Tree,Queue,C
+"In a singly linked list, each node contains:",Only data,Data and two pointers,Data and one pointer,Only a pointer,C
+Hash collision can be resolved using:,Chaining,Sorting,Recursion,Backtracking,A
+The height of a complete binary tree with n nodes is:,n,n/2,log₂(n),n log n,C

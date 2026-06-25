@@ -55,8 +55,8 @@ export const createQuiz = async (req: AuthRequest, res: Response): Promise<void>
 
     // MCQ must have exactly 10 questions with correct answers
     if (type === 'mcq') {
-      if (!questions || questions.length !== 10) {
-        res.status(400).json(<ApiResponse>{ success: false, message: 'MCQ quiz must have exactly 10 questions.' });
+      if (!questions || questions.length < 1) {
+        res.status(400).json(<ApiResponse>{ success: false, message: 'MCQ quiz must have at least 1 question.' });
         return;
       }
       for (let i = 0; i < questions.length; i++) {
@@ -334,13 +334,6 @@ export const submitMcqAnswers = async (req: AuthRequest, res: Response): Promise
       return;
     }
 
-    // Validate all 10 questions answered
-    const answerKeys = Object.keys(answers);
-    if (answerKeys.length !== 10) {
-      res.status(400).json(<ApiResponse>{ success: false, message: 'All 10 questions must be answered.' });
-      return;
-    }
-
     // Get correct answers for grading
     const questionsResult = await pool.request()
       .input('quiz_id', sql.Int, parseInt(id, 10))
@@ -348,6 +341,13 @@ export const submitMcqAnswers = async (req: AuthRequest, res: Response): Promise
 
     let score = 0;
     const total = questionsResult.recordset.length;
+
+    // Validate all questions answered
+    const answerKeys = Object.keys(answers);
+    if (answerKeys.length !== total) {
+      res.status(400).json(<ApiResponse>{ success: false, message: `All ${total} questions must be answered.` });
+      return;
+    }
 
     for (const q of questionsResult.recordset) {
       const studentAnswer = answers[String(q.question_num)];
