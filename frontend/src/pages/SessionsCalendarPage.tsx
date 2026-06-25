@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Video, Plus } from 'lucide-react';
 import Layout from '../components/Layout';
 import CreateSessionModal from '../components/CreateSessionModal';
 import DaySessionsModal from '../components/DaySessionsModal';
@@ -80,14 +81,14 @@ const SessionsCalendarPage: React.FC = () => {
     <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Study Sessions 🎥</h1>
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">Study Sessions <Video size={26} /></h1>
               <p className="text-gray-500 mt-1">Click a day to view or schedule live sessions.</p>
             </div>
             <button
               onClick={handleScheduleFromHeader}
               className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition font-semibold text-sm flex items-center gap-2 shadow-sm"
             >
-              <span>+</span> Schedule Session
+              <Plus size={20} /> Schedule Session
             </button>
           </div>
 

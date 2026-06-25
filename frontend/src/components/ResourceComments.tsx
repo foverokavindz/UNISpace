@@ -4,6 +4,7 @@
 // ============================================================
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { MessageCircle, MessagesSquare, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 
@@ -152,7 +153,7 @@ const ResourceComments: React.FC<ResourceCommentsProps> = ({ resourceId, resourc
         className="relative px-2 py-1 bg-gray-100 text-gray-700 rounded hover:bg-purple-50 hover:text-purple-600 text-xs transition flex items-center gap-1"
         title="Discussion"
       >
-        💬
+        <MessageCircle size={16} />
         {commentCount > 0 && (
           <span className="absolute -top-1.5 -right-1.5 bg-purple-600 text-white text-[9px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1">
             {commentCount > 99 ? '99+' : commentCount}
@@ -171,14 +172,14 @@ const ResourceComments: React.FC<ResourceCommentsProps> = ({ resourceId, resourc
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 bg-gradient-to-r from-purple-50 to-blue-50">
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-bold text-gray-800 truncate">💬 Discussion</h3>
+                <h3 className="text-sm font-bold text-gray-800 truncate flex items-center gap-1.5"><MessageCircle size={16} /> Discussion</h3>
                 <p className="text-xs text-gray-500 truncate" title={resourceName}>{resourceName}</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
                 className="ml-3 text-gray-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition"
               >
-                ✕
+                <X size={18} />
               </button>
             </div>
 
@@ -186,7 +187,7 @@ const ResourceComments: React.FC<ResourceCommentsProps> = ({ resourceId, resourc
             <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50" style={{ minHeight: '300px' }}>
               {comments.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-400 py-12">
-                  <span className="text-4xl mb-2">💭</span>
+                  <MessagesSquare size={36} className="mb-2" />
                   <p className="text-sm font-medium">No comments yet</p>
                   <p className="text-xs mt-1">Be the first to start the discussion!</p>
                 </div>

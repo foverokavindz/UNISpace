@@ -6,6 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { FileText, Plus, Trash2 } from 'lucide-react';
 import api from '../services/api';
 import type { Quiz } from '../types';
 
@@ -57,14 +58,14 @@ const AdminQuizListPage: React.FC = () => {
     <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Quizzes 📝</h1>
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">Quizzes <FileText size={26} /></h1>
               <p className="text-gray-500 mt-1">Manage quizzes and view student submissions.</p>
             </div>
             <button
               onClick={() => navigate('/admin/quizzes/create')}
               className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition font-semibold text-sm flex items-center gap-2 shadow-sm"
             >
-              <span>+</span> Create Quiz
+              <Plus size={20} /> Create Quiz
             </button>
           </div>
 
@@ -143,7 +144,7 @@ const AdminQuizListPage: React.FC = () => {
                           className="text-red-600 hover:text-white border border-red-150 hover:bg-red-600 rounded-lg p-1.5 transition"
                           title="Delete"
                         >
-                          🗑️
+                          <Trash2 size={16} />
                         </button>
                       </td>
                     </tr>

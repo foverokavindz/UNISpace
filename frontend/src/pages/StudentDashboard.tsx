@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Bell, Megaphone, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 import api from '../services/api';
@@ -113,14 +114,14 @@ const StudentDashboard: React.FC = () => {
           <div className="mb-8 flex justify-between items-start">
             <div>
               <h1 className="text-2xl font-bold text-gray-800">
-                Welcome back, {user?.full_name}! 👋
+                Welcome back, {user?.full_name}!
               </h1>
               <p className="text-gray-500 mt-1">
                 Student ID: {user?.student_id} &nbsp;|&nbsp; Role: {user?.role}
               </p>
             </div>
             <Link to="/student/notifications" className="relative p-2 text-gray-600 hover:text-blue-600">
-              <span className="text-xl">🔔</span>
+              <Bell size={20} />
               {unreadCount > 0 && (
                 <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
                   {unreadCount}
@@ -265,7 +266,7 @@ const StudentDashboard: React.FC = () => {
                 <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Notifications</h2>
                 <div className="flex flex-col gap-3">
                   <div className="flex items-start gap-3 p-3 bg-blue-50 rounded text-sm text-blue-900">
-                    <span>📢</span>
+                    <Megaphone size={18} className="shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold">Welcome to UNISpace!</p>
                       <p className="text-blue-700 opacity-90 mt-1">Please complete your student profile setup.</p>
@@ -291,7 +292,7 @@ const StudentDashboard: React.FC = () => {
                     className="text-gray-500 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition"
                     title="Close Preview"
                   >
-                    ✖️
+                    <X size={18} />
                   </button>
                 </div>
                 <div className="p-4 overflow-auto flex-1 flex items-center justify-center bg-gray-100/50">

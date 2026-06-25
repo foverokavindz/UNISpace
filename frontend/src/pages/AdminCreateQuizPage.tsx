@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { FileText, Zap, Check } from 'lucide-react';
 import api from '../services/api';
 import { DUMMY_QUIZZES } from '../_mock/dummyQuizzes';
 import type { QuestionInput } from '../_mock/dummyQuizzes';
@@ -120,7 +121,7 @@ const AdminCreateQuizPage: React.FC = () => {
     <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Create Quiz 📝</h1>
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">Create Quiz <FileText size={26} /></h1>
               <p className="text-gray-500 mt-1">Create a new MCQ or document upload quiz.</p>
             </div>
             <button
@@ -134,7 +135,7 @@ const AdminCreateQuizPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 border border-gray-100 space-y-6">
             {/* ── Dummy Data Loader ── */}
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center gap-4">
-              <span className="text-amber-600 text-lg">⚡</span>
+              <Zap size={20} className="text-amber-600 shrink-0" />
               <div className="flex-1">
                 <label className="block text-sm font-semibold text-amber-800 mb-1">Quick Fill — Load Dummy Quiz Data</label>
                 <select
@@ -265,7 +266,7 @@ const AdminCreateQuizPage: React.FC = () => {
                       ))}
                     </div>
                     {q.correct_option && (
-                      <p className="text-xs text-green-600 mt-2">✓ Correct answer: {q.correct_option}</p>
+                      <p className="text-xs text-green-600 mt-2 flex items-center gap-1"><Check size={14} /> Correct answer: {q.correct_option}</p>
                     )}
                   </div>
                 ))}

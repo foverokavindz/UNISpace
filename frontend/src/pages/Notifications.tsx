@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Megaphone, FileText, GraduationCap, Calendar, BookOpen, Folder, Link2, ArrowRight, Clock } from 'lucide-react';
 import Layout from '../components/Layout';
 import api from '../services/api';
 
@@ -77,7 +78,7 @@ const Notifications: React.FC = () => {
                       }`}
                     >
                       <div className="flex items-start gap-3">
-                        <span className="text-2xl mt-0.5">📢</span>
+                        <Megaphone size={20} className="text-blue-500 mt-0.5 shrink-0" />
 
                         {/* All content is left-aligned */}
                         <div className="flex-1 text-left">
@@ -99,35 +100,35 @@ const Notifications: React.FC = () => {
                             <div className="flex flex-col gap-1.5 text-sm text-gray-700 mb-3">
                               {parts['Resource'] && (
                                 <div className="flex items-center gap-2">
-                                  <span className="w-5 text-center">📄</span>
+                                  <FileText size={16} className="w-5 text-gray-400 shrink-0" />
                                   <span className="font-medium text-gray-500 w-20 shrink-0">File:</span>
                                   <span>{parts['Resource']}</span>
                                 </div>
                               )}
                               {parts['Level'] && (
                                 <div className="flex items-center gap-2">
-                                  <span className="w-5 text-center">🎓</span>
+                                  <GraduationCap size={16} className="w-5 text-gray-400 shrink-0" />
                                   <span className="font-medium text-gray-500 w-20 shrink-0">Level:</span>
                                   <span>{parts['Level']}</span>
                                 </div>
                               )}
                               {parts['Semester'] && (
                                 <div className="flex items-center gap-2">
-                                  <span className="w-5 text-center">📅</span>
+                                  <Calendar size={16} className="w-5 text-gray-400 shrink-0" />
                                   <span className="font-medium text-gray-500 w-20 shrink-0">Semester:</span>
                                   <span>{parts['Semester']}</span>
                                 </div>
                               )}
                               {parts['Subject'] && (
                                 <div className="flex items-center gap-2">
-                                  <span className="w-5 text-center">📚</span>
+                                  <BookOpen size={16} className="w-5 text-gray-400 shrink-0" />
                                   <span className="font-medium text-gray-500 w-20 shrink-0">Subject:</span>
                                   <span>{parts['Subject']}</span>
                                 </div>
                               )}
                               {parts['Folder'] && (
                                 <div className="flex items-center gap-2">
-                                  <span className="w-5 text-center">📁</span>
+                                  <Folder size={16} className="w-5 text-gray-400 shrink-0" />
                                   <span className="font-medium text-gray-500 w-20 shrink-0">Folder:</span>
                                   <span className="capitalize">{parts['Folder']}</span>
                                 </div>
@@ -138,20 +139,20 @@ const Notifications: React.FC = () => {
                           {/* Clickable link to navigate to the resource in the website */}
                           {resourceUrl && (
                             <div className="flex items-center gap-2 text-sm mb-2">
-                              <span className="w-5 text-center">🔗</span>
+                              <Link2 size={16} className="w-5 text-gray-400 shrink-0" />
                               <span className="font-medium text-gray-500 w-20 shrink-0">Location:</span>
                               <Link
                                 to={resourceUrl}
-                                className="text-blue-600 hover:text-blue-800 hover:underline font-semibold transition-colors"
+                                className="text-blue-600 hover:text-blue-800 hover:underline font-semibold transition-colors inline-flex items-center gap-1"
                               >
-                                View resource →
+                                View resource <ArrowRight size={14} />
                               </Link>
                             </div>
                           )}
 
                           {/* Timestamp */}
-                          <p className="text-xs text-gray-400 mt-3">
-                            🕐 {new Date(notif.created_at).toLocaleString()}
+                          <p className="text-xs text-gray-400 mt-3 flex items-center gap-1">
+                            <Clock size={14} /> {new Date(notif.created_at).toLocaleString()}
                           </p>
                         </div>
                       </div>

@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FileText, Check, Timer, ArrowRight } from 'lucide-react';
 import Layout from '../components/Layout';
 import api from '../services/api';
 import type { Quiz } from '../types';
@@ -42,7 +43,7 @@ const StudentQuizListPage: React.FC = () => {
     <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Quizzes 📝</h1>
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">Quizzes <FileText size={26} /></h1>
               <p className="text-gray-500 mt-1">View and take quizzes assigned to you.</p>
             </div>
             <button
@@ -91,8 +92,8 @@ const StudentQuizListPage: React.FC = () => {
                         {quiz.type === 'mcq' ? 'MCQ' : 'Document'}
                       </span>
                       {quiz.submitted ? (
-                        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700">
-                          Submitted ✓
+                        <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 inline-flex items-center gap-1">
+                          Submitted <Check size={14} />
                         </span>
                       ) : (
                         <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
@@ -104,8 +105,8 @@ const StudentQuizListPage: React.FC = () => {
                     <p className="text-sm text-gray-500 mb-1">
                       Level {quiz.level} • {formatSemester(quiz.semester)} • {quiz.edu_stream}
                     </p>
-                    <p className="text-xs text-gray-400">
-                      ⏱ {quiz.time_limit} min • Created {new Date(quiz.created_at).toLocaleDateString()}
+                    <p className="text-xs text-gray-400 flex items-center gap-1">
+                      <Timer size={14} /> {quiz.time_limit} min • Created {new Date(quiz.created_at).toLocaleDateString()}
                     </p>
                   </div>
                   <div className="mt-4">
@@ -118,7 +119,7 @@ const StudentQuizListPage: React.FC = () => {
                           : 'bg-blue-600 text-white hover:bg-blue-700'
                       }`}
                     >
-                      {quiz.submitted ? 'Already Submitted' : 'Take Quiz →'}
+                      {quiz.submitted ? 'Already Submitted' : <span className="flex items-center justify-center gap-1">Take Quiz <ArrowRight size={16} /></span>}
                     </button>
                   </div>
                 </div>

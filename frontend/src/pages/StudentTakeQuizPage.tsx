@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { CheckCircle2, Timer, Check, X, AlertTriangle } from 'lucide-react';
 import Layout from '../components/Layout';
 import api from '../services/api';
 import type { Quiz, QuizQuestion, QuizSubmission } from '../types';
@@ -204,7 +205,7 @@ const StudentTakeQuizPage: React.FC = () => {
     return (
       <Layout>
             <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-8 border border-gray-100 text-center">
-              <h1 className="text-2xl font-bold text-gray-800 mb-4">✅ Already Submitted</h1>
+              <h1 className="text-2xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-2"><CheckCircle2 size={24} className="text-green-600" /> Already Submitted</h1>
               <p className="text-gray-500 mb-2">You have already submitted your document for this quiz.</p>
               <p className="text-sm text-gray-400">File: {submission.original_name}</p>
               <button
@@ -232,7 +233,7 @@ const StudentTakeQuizPage: React.FC = () => {
               <div className={`text-2xl font-mono font-bold px-4 py-2 rounded-lg ${
                 timeLeft <= 60 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
               }`}>
-                ⏱ {formatTime(timeLeft)}
+                <span className="inline-flex items-center gap-1.5"><Timer size={22} /> {formatTime(timeLeft)}</span>
               </div>
             )}
           </div>
@@ -292,8 +293,8 @@ const StudentTakeQuizPage: React.FC = () => {
                           <div key={opt} className={`p-2.5 rounded-lg border text-sm flex items-center gap-2 ${bg}`}>
                             <span className="font-semibold text-gray-600">{opt}.</span>
                             <span>{optionText}</span>
-                            {isCorrectOption && <span className="ml-auto text-green-600">✓</span>}
-                            {isStudentAnswer && !isCorrect && <span className="ml-auto text-red-600">✗</span>}
+                            {isCorrectOption && <Check size={16} className="ml-auto text-green-600" />}
+                            {isStudentAnswer && !isCorrect && <X size={16} className="ml-auto text-red-600" />}
                           </div>
                         );
                       })}
@@ -317,8 +318,8 @@ const StudentTakeQuizPage: React.FC = () => {
           {quiz.type === 'mcq' && !showResults && (
             <div className="space-y-4">
               {validationMsg && (
-                <div className="p-3 bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg text-sm">
-                  ⚠️ {validationMsg}
+                <div className="p-3 bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg text-sm flex items-center gap-2">
+                  <AlertTriangle size={16} /> {validationMsg}
                 </div>
               )}
 
@@ -382,8 +383,8 @@ const StudentTakeQuizPage: React.FC = () => {
               </p>
 
               {validationMsg && (
-                <div className="p-3 bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg text-sm mb-4">
-                  ⚠️ {validationMsg}
+                <div className="p-3 bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg text-sm mb-4 flex items-center gap-2">
+                  <AlertTriangle size={16} /> {validationMsg}
                 </div>
               )}
 

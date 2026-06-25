@@ -1,4 +1,5 @@
 import React from 'react';
+import { BookOpen, FileText, ScrollText, Folder, Film, HelpCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -25,8 +26,8 @@ const SubjectUploadPage: React.FC = () => {
     <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mt-8 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                {isAdmin ? 'Upload Resources' : 'Resources'} - {subjectTitle} 📚
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                {isAdmin ? 'Upload Resources' : 'Resources'} - {subjectTitle} <BookOpen size={26} />
               </h1>
               <p className="text-gray-500 mt-1">
                 {isAdmin ? `Add new study materials for ${levelTitle}, ${semesterTitle}, ${subjectTitle}.` : `Browse study materials for ${levelTitle}, ${semesterTitle}, ${subjectTitle}.`}
@@ -46,7 +47,7 @@ const SubjectUploadPage: React.FC = () => {
                 onClick={() => navigate(`${routePrefix}/${level}/${semester}/${subject}/notes`)}
                 className="bg-blue-500 hover:bg-blue-600 text-white text-2xl font-bold h-48 rounded-xl shadow-lg transition transform hover:scale-105 flex flex-col items-center justify-center gap-4"
               >
-                <span className="text-4xl">📄</span>
+                <FileText size={40} />
                 Notes
               </button>
               
@@ -54,7 +55,7 @@ const SubjectUploadPage: React.FC = () => {
                 onClick={() => navigate(`${routePrefix}/${level}/${semester}/${subject}/past-papers`)}
                 className="bg-red-500 hover:bg-red-600 text-white text-2xl font-bold h-48 rounded-xl shadow-lg transition transform hover:scale-105 flex flex-col items-center justify-center gap-4"
               >
-                <span className="text-4xl">📝</span>
+                <ScrollText size={40} />
                 Past Papers
               </button>
 
@@ -62,7 +63,7 @@ const SubjectUploadPage: React.FC = () => {
                 onClick={() => navigate(`${routePrefix}/${level}/${semester}/${subject}/tutes-assignments`)}
                 className="bg-green-500 hover:bg-green-600 text-white text-2xl font-bold h-48 rounded-xl shadow-lg transition transform hover:scale-105 flex flex-col items-center justify-center gap-4"
               >
-                <span className="text-4xl">📁</span>
+                <Folder size={40} />
                 Tutes & Assignments
               </button>
 
@@ -70,7 +71,7 @@ const SubjectUploadPage: React.FC = () => {
                 onClick={() => navigate(`${routePrefix}/${level}/${semester}/${subject}/videos`)}
                 className="bg-purple-500 hover:bg-purple-600 text-white text-2xl font-bold h-48 rounded-xl shadow-lg transition transform hover:scale-105 flex flex-col items-center justify-center gap-4"
               >
-                <span className="text-4xl">🎬</span>
+                <Film size={40} />
                 Videos
               </button>
 
@@ -78,7 +79,7 @@ const SubjectUploadPage: React.FC = () => {
                 onClick={() => navigate(`${routePrefix}/${level}/${semester}/${subject}/quizzes`)}
                 className="bg-yellow-500 hover:bg-yellow-600 text-white text-2xl font-bold h-48 rounded-xl shadow-lg transition transform hover:scale-105 flex flex-col items-center justify-center gap-4 lg:col-start-2"
               >
-                <span className="text-4xl">❓</span>
+                <HelpCircle size={40} />
                 Quizzes
               </button>
             </div>

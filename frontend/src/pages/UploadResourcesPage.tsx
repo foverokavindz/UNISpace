@@ -1,4 +1,5 @@
 import React from 'react';
+import { BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
@@ -14,8 +15,8 @@ const UploadResourcesPage: React.FC = () => {
     <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mt-8 mb-8">
             <div>
-              <h1 className="text-5xl font-bold text-gray-800">
-                {isAdmin ? 'Upload Resources' : 'Resources'} 📚
+              <h1 className="text-5xl font-bold text-gray-800 flex items-center gap-3">
+                {isAdmin ? 'Upload Resources' : 'Resources'} <BookOpen size={40} />
               </h1>
               <p className="text-gray-500 mt-1">
                 {isAdmin ? 'Add new study materials for students.' : 'Browse study materials and upload notes.'}

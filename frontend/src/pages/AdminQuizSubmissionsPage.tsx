@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { ClipboardList, CheckCircle2, XCircle } from 'lucide-react';
 import Layout from '../components/Layout';
 import api from '../services/api';
 import type { Quiz, QuizQuestion, QuizSubmission } from '../types';
@@ -55,8 +56,8 @@ const AdminQuizSubmissionsPage: React.FC = () => {
     <Layout>
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                Submissions {quiz ? `— ${quiz.title}` : ''} 📋
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                Submissions {quiz ? `— ${quiz.title}` : ''} <ClipboardList size={26} />
               </h1>
               {quiz && (
                 <p className="text-gray-500 mt-1">
@@ -188,7 +189,9 @@ const AdminQuizSubmissionsPage: React.FC = () => {
                                       Student: <span className="font-semibold">{studentAnswer}</span>
                                       {' '} | Correct: <span className="font-semibold text-green-700">{q.correct_option}</span>
                                       {' '}
-                                      {isCorrect ? '✅' : '❌'}
+                                      {isCorrect
+                                        ? <CheckCircle2 size={16} className="inline text-green-600" />
+                                        : <XCircle size={16} className="inline text-red-600" />}
                                     </p>
                                   </div>
                                 );

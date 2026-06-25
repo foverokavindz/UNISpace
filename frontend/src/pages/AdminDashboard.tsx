@@ -15,6 +15,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { Wrench, AlertTriangle, GraduationCap, BookOpen, FileText, BarChart3, Upload, Settings } from 'lucide-react';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -167,8 +168,8 @@ const AdminDashboard: React.FC = () => {
     <Layout>
           {/* Welcome message */}
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-800">
-              Admin Dashboard 🛠️
+            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+              Admin Dashboard <Wrench size={24} />
             </h1>
             <p className="text-gray-500 mt-1">
               Welcome, {user?.full_name}. You have full administrative access.
@@ -178,7 +179,7 @@ const AdminDashboard: React.FC = () => {
           {/* Error state */}
           {error && (
             <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm mb-6 flex items-center gap-2">
-              <span>⚠️</span>
+              <AlertTriangle size={18} />
               <span>{error}</span>
               <button onClick={fetchStats} className="ml-auto text-red-600 hover:text-red-800 font-semibold text-xs underline">
                 Retry
@@ -190,8 +191,8 @@ const AdminDashboard: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* Total Students Card */}
             <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-4xl mb-4">
-                👨‍🎓
+              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-4">
+                <GraduationCap size={32} className="text-blue-500" />
               </div>
               <p className="text-sm text-gray-500 font-medium tracking-wide uppercase">Total Students</p>
               {isLoading ? (
@@ -203,8 +204,8 @@ const AdminDashboard: React.FC = () => {
 
             {/* Total Resources Card */}
             <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-4xl mb-4">
-                📚
+              <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mb-4">
+                <BookOpen size={32} className="text-emerald-500" />
               </div>
               <p className="text-sm text-gray-500 font-medium tracking-wide uppercase">Total Resources</p>
               {isLoading ? (
@@ -216,8 +217,8 @@ const AdminDashboard: React.FC = () => {
 
             {/* Active Quizzes Card */}
             <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-4xl mb-4">
-                📝
+              <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-4">
+                <FileText size={32} className="text-purple-500" />
               </div>
               <p className="text-sm text-gray-500 font-medium tracking-wide uppercase">Active Quizzes</p>
               {isLoading ? (
@@ -246,7 +247,7 @@ const AdminDashboard: React.FC = () => {
                 </div>
               ) : totalForChart === 0 ? (
                 <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-gray-100 rounded-xl bg-gray-50/30">
-                  <span className="text-4xl mb-2">📊</span>
+                  <BarChart3 size={36} className="text-gray-300 mb-2" />
                   <p className="text-sm font-medium text-gray-500">No resources uploaded yet</p>
                   <p className="text-xs text-gray-400 mt-1">Upload some materials to see the distribution</p>
                 </div>
@@ -302,7 +303,7 @@ const AdminDashboard: React.FC = () => {
                   onClick={() => navigate('/admin/upload-resources')}
                   className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow flex items-center gap-2"
                 >
-                  <span>📤</span> Upload Resource
+                  <Upload size={20} /> Upload Resource
                 </button>
               </div>
 
@@ -316,7 +317,7 @@ const AdminDashboard: React.FC = () => {
                   onClick={() => navigate('/admin/resources')}
                   className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-all duration-200 shadow-sm hover:shadow flex items-center gap-2"
                 >
-                  <span>⚙️</span> Manage Resources
+                  <Settings size={20} /> Manage Resources
                 </button>
               </div>
             </div>

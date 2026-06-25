@@ -1,4 +1,5 @@
 import React from 'react';
+import { BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,8 +21,8 @@ const SemesterUploadPage: React.FC = () => {
     <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mt-8 mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                {isAdmin ? 'Upload Resources' : 'Resources'} - {levelTitle} ({semesterTitle}) 📚
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                {isAdmin ? 'Upload Resources' : 'Resources'} - {levelTitle} ({semesterTitle}) <BookOpen size={26} />
               </h1>
               <p className="text-gray-500 mt-1">
                 {isAdmin ? `Add new study materials for students in ${levelTitle}, ${semesterTitle}.` : `Browse study materials for ${levelTitle}, ${semesterTitle}.`}

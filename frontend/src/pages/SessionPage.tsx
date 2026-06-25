@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { User, Clock, Users, ArrowRight } from 'lucide-react';
 import Layout from '../components/Layout';
 import JitsiRoom from '../components/JitsiRoom';
 import { useAuth } from '../context/AuthContext';
@@ -137,9 +138,9 @@ const SessionPage: React.FC = () => {
                   <p className="text-gray-600 mt-2">{session.description}</p>
                 )}
                 <div className="mt-4 text-sm text-gray-500 space-y-1">
-                  <p>👤 Host: {session.host_name || 'Unknown'}</p>
-                  <p>🕒 {new Date(session.scheduled_at).toLocaleString()}</p>
-                  <p>👥 {session.participant_count ?? session.participants.length} / {session.max_participants} joined</p>
+                  <p className="flex items-center gap-2"><User size={16} /> Host: {session.host_name || 'Unknown'}</p>
+                  <p className="flex items-center gap-2"><Clock size={16} /> {new Date(session.scheduled_at).toLocaleString()}</p>
+                  <p className="flex items-center gap-2"><Users size={16} /> {session.participant_count ?? session.participants.length} / {session.max_participants} joined</p>
                 </div>
 
                 {isFuture && (
@@ -151,9 +152,9 @@ const SessionPage: React.FC = () => {
                 <button
                   onClick={handleJoin}
                   disabled={isJoining}
-                  className="mt-5 w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+                  className="mt-5 w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center gap-1"
                 >
-                  {isJoining ? 'Joining…' : 'Join Meeting →'}
+                  {isJoining ? 'Joining…' : <><span>Join Meeting</span> <ArrowRight size={18} /></>}
                 </button>
               </div>
 

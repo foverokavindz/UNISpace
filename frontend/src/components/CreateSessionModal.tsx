@@ -4,6 +4,7 @@
 // ============================================================
 
 import React, { useState } from 'react';
+import { Calendar } from 'lucide-react';
 import { createSession } from '../services/session.service';
 
 interface CreateSessionModalProps {
@@ -76,7 +77,7 @@ const CreateSessionModal: React.FC<CreateSessionModalProps> = ({ defaultDate, on
       <div className="bg-white rounded-xl shadow-lg max-w-lg w-full flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-800">Schedule Session 📅</h2>
+          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">Schedule Session <Calendar size={18} /></h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">
             &times;
           </button>

@@ -4,6 +4,7 @@
 // ============================================================
 
 import React from 'react';
+import { Users, ArrowRight, Plus } from 'lucide-react';
 import type { Session } from '../types';
 
 interface DaySessionsModalProps {
@@ -68,14 +69,14 @@ const DaySessionsModal: React.FC<DaySessionsModalProps> = ({ date, sessions, onC
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">
-                  👥 {s.participant_count ?? 0} / {s.max_participants} joined
+                <span className="text-xs text-gray-400 flex items-center gap-1">
+                  <Users size={16} /> {s.participant_count ?? 0} / {s.max_participants} joined
                 </span>
                 <button
                   onClick={() => onJoin(s.id)}
-                  className="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
+                  className="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition flex items-center gap-1"
                 >
-                  Join →
+                  Join <ArrowRight size={16} />
                 </button>
               </div>
             </div>
@@ -88,7 +89,7 @@ const DaySessionsModal: React.FC<DaySessionsModalProps> = ({ date, sessions, onC
             onClick={onSchedule}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition flex items-center gap-2"
           >
-            <span>+</span> Schedule Session
+            <Plus size={20} /> Schedule Session
           </button>
         </div>
       </div>

@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
+import {
+  BookOpen, Upload, FolderOpen, Rocket, Inbox, Calendar, Eye, Download,
+  Pencil, Trash2, X, Check, FileText, FileSpreadsheet, Presentation,
+  FileArchive, Video, Image as ImageIcon, File,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import api from '../services/api';
 import ResourceComments from '../components/ResourceComments';
 
@@ -187,28 +193,28 @@ const CategoryUploadPage: React.FC = () => {
   };
 
   // Helper for nice file design
-  const getFileIconAndColor = (filename: string) => {
+  const getFileIconAndColor = (filename: string): { Icon: LucideIcon; color: string; label: string } => {
     const ext = filename.split('.').pop()?.toLowerCase();
     switch (ext) {
-      case 'pdf': return { emoji: '📄', color: 'bg-red-50 text-red-600 border-red-200', label: 'PDF' };
+      case 'pdf': return { Icon: FileText, color: 'bg-red-50 text-red-600 border-red-200', label: 'PDF' };
       case 'doc':
-      case 'docx': return { emoji: '📝', color: 'bg-blue-50 text-blue-600 border-blue-200', label: 'Word' };
+      case 'docx': return { Icon: FileText, color: 'bg-blue-50 text-blue-600 border-blue-200', label: 'Word' };
       case 'xls':
-      case 'xlsx': return { emoji: '📊', color: 'bg-green-50 text-green-600 border-green-200', label: 'Excel' };
+      case 'xlsx': return { Icon: FileSpreadsheet, color: 'bg-green-50 text-green-600 border-green-200', label: 'Excel' };
       case 'ppt':
-      case 'pptx': return { emoji: '📉', color: 'bg-orange-50 text-orange-600 border-orange-200', label: 'Slides' };
+      case 'pptx': return { Icon: Presentation, color: 'bg-orange-50 text-orange-600 border-orange-200', label: 'Slides' };
       case 'zip':
       case 'rar':
-      case '7z': return { emoji: '📦', color: 'bg-purple-50 text-purple-600 border-purple-200', label: 'Archive' };
+      case '7z': return { Icon: FileArchive, color: 'bg-purple-50 text-purple-600 border-purple-200', label: 'Archive' };
       case 'mp4':
       case 'mkv':
       case 'avi':
-      case 'mov': return { emoji: '🎥', color: 'bg-indigo-50 text-indigo-600 border-indigo-200', label: 'Video' };
+      case 'mov': return { Icon: Video, color: 'bg-indigo-50 text-indigo-600 border-indigo-200', label: 'Video' };
       case 'jpg':
       case 'jpeg':
       case 'png':
-      case 'gif': return { emoji: '🖼️', color: 'bg-amber-50 text-amber-600 border-amber-200', label: 'Image' };
-      default: return { emoji: '📄', color: 'bg-gray-50 text-gray-600 border-gray-200', label: 'File' };
+      case 'gif': return { Icon: ImageIcon, color: 'bg-amber-50 text-amber-600 border-amber-200', label: 'Image' };
+      default: return { Icon: File, color: 'bg-gray-50 text-gray-600 border-gray-200', label: 'File' };
     }
   };
 
@@ -220,8 +226,8 @@ const CategoryUploadPage: React.FC = () => {
           {/* Header */}
           <div className="flex items-center justify-between mt-8 mb-8 border-b border-gray-200 pb-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                {categoryTitle} 📚
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                {categoryTitle} <BookOpen size={26} />
               </h1>
               <p className="text-gray-500 mt-1">
                 {levelTitle} &bull; {semesterTitle} &bull; {subjectTitle}
@@ -241,7 +247,7 @@ const CategoryUploadPage: React.FC = () => {
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 sticky top-8">
                   <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <span>📤</span> Upload Materials
+                    <Upload size={20} /> Upload Materials
                   </h3>
 
                   {message && (
@@ -263,7 +269,7 @@ const CategoryUploadPage: React.FC = () => {
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                       />
                       <div className="space-y-2 pointer-events-none">
-                        <span className="text-4xl block group-hover:scale-110 transition duration-200">📂</span>
+                        <FolderOpen size={40} className="block mx-auto text-gray-400 group-hover:scale-110 transition duration-200" />
                         <span className="block text-sm font-semibold text-gray-700">
                           {selectedFile ? 'Change Selected File' : 'Select File from PC'}
                         </span>
@@ -304,7 +310,7 @@ const CategoryUploadPage: React.FC = () => {
                         </>
                       ) : (
                         <>
-                          <span>🚀</span> Upload
+                          <Rocket size={20} /> Upload
                         </>
                       )}
                     </button>
@@ -317,7 +323,7 @@ const CategoryUploadPage: React.FC = () => {
             <div className={`${isAdmin ? 'lg:col-span-2' : 'lg:col-span-3'} flex flex-col`}>
               <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 flex-1">
                 <h3 className="text-lg font-bold text-gray-800 mb-6 border-b pb-3 flex items-center justify-between">
-                  <span>📂 Available Materials</span>
+                  <span className="flex items-center gap-2"><FolderOpen size={18} /> Available Materials</span>
                   <span className="text-xs bg-gray-100 px-2.5 py-1 rounded-full text-gray-500 font-medium">
                     {resources.length} {resources.length === 1 ? 'file' : 'files'}
                   </span>
@@ -333,7 +339,7 @@ const CategoryUploadPage: React.FC = () => {
                   </div>
                 ) : resources.length === 0 ? (
                   <div className="text-center py-16 border-2 border-dashed border-gray-100 rounded-xl bg-gray-50/20">
-                    <span className="text-5xl block mb-3">📭</span>
+                    <Inbox size={48} className="block mx-auto mb-3 text-gray-300" />
                     <h4 className="text-base font-semibold text-gray-700">No materials uploaded yet</h4>
                     <p className="text-xs text-gray-400 mt-1 max-w-sm mx-auto">
                       {isAdmin 
@@ -371,7 +377,7 @@ const CategoryUploadPage: React.FC = () => {
                               className="object-cover w-full h-full rounded-md"
                             />
                           ) : (
-                            <span className="text-4xl">{fileStyle.emoji}</span>
+                            <fileStyle.Icon size={40} />
                           )}
                         </div>
                         {/* File name */}
@@ -395,14 +401,14 @@ const CategoryUploadPage: React.FC = () => {
                                 disabled={isRenaming}
                                 className="flex-1 px-2 py-0.5 bg-green-600 text-white rounded text-xs hover:bg-green-700 transition disabled:opacity-50"
                               >
-                                {isRenaming ? '...' : '✓ Save'}
+                                {isRenaming ? '...' : <span className="flex items-center justify-center gap-1"><Check size={14} /> Save</span>}
                               </button>
                               <button
                                 onClick={cancelRename}
                                 disabled={isRenaming}
-                                className="flex-1 px-2 py-0.5 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300 transition disabled:opacity-50"
+                                className="flex-1 px-2 py-0.5 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300 transition disabled:opacity-50 flex items-center justify-center gap-1"
                               >
-                                ✕ Cancel
+                                <X size={14} /> Cancel
                               </button>
                             </div>
                           </div>
@@ -415,8 +421,8 @@ const CategoryUploadPage: React.FC = () => {
                           </h4>
                         )}
                         {/* Date */}
-                        <p className="text-xs text-gray-500 mb-2">
-                          📅 {new Date(resource.created_at).toLocaleDateString(undefined, {
+                        <p className="text-xs text-gray-500 mb-2 flex items-center gap-1">
+                          <Calendar size={14} /> {new Date(resource.created_at).toLocaleDateString(undefined, {
                             year: 'numeric',
                             month: 'short',
                             day: 'numeric',
@@ -429,9 +435,9 @@ const CategoryUploadPage: React.FC = () => {
                           {isPreviewable && (
                             <button
                               onClick={handlePreview}
-                              className="flex-1 px-2 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 text-xs transition"
+                              className="flex-1 px-2 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 text-xs transition flex items-center justify-center gap-1"
                             >
-                              👁️ Preview
+                              <Eye size={14} /> Preview
                             </button>
                           )}
                           <a
@@ -439,9 +445,9 @@ const CategoryUploadPage: React.FC = () => {
                             download={resource.original_name}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs transition text-center"
+                            className="flex-1 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs transition text-center flex items-center justify-center gap-1"
                           >
-                            ⬇️ Download
+                            <Download size={14} /> Download
                           </a>
                           <ResourceComments resourceId={resource.id} resourceName={resource.original_name} />
                           {isAdmin && (
@@ -450,7 +456,7 @@ const CategoryUploadPage: React.FC = () => {
                               className="p-1 text-amber-600 hover:text-white hover:bg-amber-500 rounded"
                               title="Rename material"
                             >
-                              ✏️
+                              <Pencil size={16} />
                             </button>
                           )}
                           {isAdmin && (
@@ -459,7 +465,7 @@ const CategoryUploadPage: React.FC = () => {
                               className="p-1 text-red-600 hover:text-white hover:bg-red-600 rounded"
                               title="Delete material"
                             >
-                              🗑️
+                              <Trash2 size={16} />
                             </button>
                           )}
                         </div>
@@ -481,7 +487,7 @@ const CategoryUploadPage: React.FC = () => {
                           className="text-gray-500 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition"
                           title="Close Preview"
                         >
-                          ✖️
+                          <X size={18} />
                         </button>
                       </div>
                       <div className="p-4 overflow-auto flex-1 flex items-center justify-center bg-gray-100/50">

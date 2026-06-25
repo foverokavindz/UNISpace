@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Settings, Plus, Trash2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
@@ -106,8 +107,8 @@ const ManageResourcesPage: React.FC = () => {
     <Layout mainClassName="flex flex-col">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">
-                Manage Resources ⚙️
+              <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                Manage Resources <Settings size={26} />
               </h1>
               <p className="text-gray-500 mt-1">
                 View, download, or delete uploaded study materials.
@@ -135,7 +136,7 @@ const ManageResourcesPage: React.FC = () => {
                 onClick={() => navigate('/admin/upload-resources')}
                 className="w-full sm:w-auto bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition font-semibold text-sm flex items-center justify-center gap-2 shadow-sm"
               >
-                <span>+</span> Add New Resource
+                <Plus size={20} /> Add New Resource
               </button>
             </div>
 
@@ -213,7 +214,7 @@ const ManageResourcesPage: React.FC = () => {
                 className="text-red-600 hover:text-white border border-red-150 hover:bg-red-600 rounded-lg p-1.5 transition"
                 title="Delete"
               >
-                🗑️
+                <Trash2 size={16} />
               </button>
             </td>
           </tr>
