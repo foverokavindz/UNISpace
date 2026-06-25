@@ -27,13 +27,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // starts true to check localStorage
+  const [isLoading, setIsLoading] = useState(true); // starts true to check sessionStorage
 
-  // On mount, check if a token exists in localStorage
-  // and fetch the user profile to restore the session
+  // On mount, check if a token exists in sessionStorage
+  // and fetch the user profile to restore the session.
+  // sessionStorage is per-tab, so each tab keeps its own independent session.
   useEffect(() => {
     const restoreSession = async () => {
-      const storedToken = localStorage.getItem('token');
+      const storedToken = sessionStorage.getItem('token');
       if (storedToken) {
         setToken(storedToken);
         try {
@@ -42,12 +43,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setUser(response.data);
           } else {
             // Token invalid — clear storage
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('user');
           }
         } catch {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
         }
       }
       setIsLoading(false);
@@ -56,50 +57,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     restoreSession();
   }, []);
 
-  // Sync auth state across browser tabs.
-  // The `storage` event fires in OTHER tabs whenever localStorage changes,
-  // so a login/logout in one tab is reflected everywhere.
-  useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key !== 'token') return;
-
-      if (!e.newValue) {
-        // Token removed elsewhere (logout) — clear local state
-        setToken(null);
-        setUser(null);
-        return;
-      }
-
-      // Token added/changed elsewhere (login) — restore session
-      setToken(e.newValue);
-      getCurrentUser()
-        .then((response) => {
-          if (response.success && response.data) {
-            setUser(response.data);
-          }
-        })
-        .catch(() => {
-          setToken(null);
-          setUser(null);
-        });
-    };
-
-    window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
-  }, []);
-
   // Called after successful login or registration
   const login = (newToken: string, newUser: User) => {
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(newUser));
+    sessionStorage.setItem('token', newToken);
+    sessionStorage.setItem('user', JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
   };
 
   // Clears all auth state
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     setToken(null);
     setUser(null);
   };

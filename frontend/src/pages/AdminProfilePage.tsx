@@ -53,8 +53,8 @@ const AdminProfilePage: React.FC = () => {
       if (response.success && response.data) {
         // Update auth context with new user data
         setUser(response.data);
-        // Also update localStorage
-        localStorage.setItem('user', JSON.stringify(response.data));
+        // Also update sessionStorage
+        sessionStorage.setItem('user', JSON.stringify(response.data));
         setSuccessMsg('Profile updated successfully!');
         setIsEditing(false);
       } else {

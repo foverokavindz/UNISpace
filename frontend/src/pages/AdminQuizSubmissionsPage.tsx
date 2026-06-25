@@ -44,7 +44,7 @@ const AdminQuizSubmissionsPage: React.FC = () => {
 
   const handleDownload = (submissionId: number) => {
     const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     // Open download in a new tab with auth
     window.open(`${API_BASE_URL}/quizzes/submissions/${submissionId}/download?token=${token}`, '_blank');
   };

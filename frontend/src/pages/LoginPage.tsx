@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
       const response = await loginUser(formData);
 
       if (response.success && response.data) {
-        // Store token and user in context + localStorage
+        // Store token and user in context + sessionStorage
         login(response.data.token, response.data.user);
 
         // Redirect based on role
